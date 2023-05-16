@@ -14,18 +14,33 @@ public class Funcionario {
 	
 	
 	@Id
-	@GeneratedValue( strategy = GenerationType.IDENTITY)
+	@GeneratedValue( strategy = GenerationType.IDENTITY	)
 	private long id;
 	
 	
-	@Column(nullable = false, length = 30)
+	@Column()
 	private String nome;
 	
 	
-	@Column(nullable = false, unique = true)
+	@Column()
 	private String email;
+	
+	@Column
+	private String cpf;
+
+	
+
+	
 
 
+	public String getCpf() {
+		return cpf;
+	}
+
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
 
 	public long getId() {
