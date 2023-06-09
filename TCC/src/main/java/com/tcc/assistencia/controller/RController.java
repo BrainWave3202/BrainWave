@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tcc.assistencia.entity.Funcionario;
 import com.tcc.assistencia.repository.FuncionarioRepository;
@@ -17,12 +18,16 @@ import com.tcc.assistencia.service.FuncionarioService;
 @RequestMapping("api/v1/")
 public class RController {
 	
-	@Autowired
+	
 	private FuncionarioRepository fr;
+	
+	
 
-	/*
+	@Autowired
 	private FuncionarioService mFuncionarioService;
-	*/
+
+
+	
 	@GetMapping("CadastrarFuncionario")
 	public String form(){
 		
@@ -30,19 +35,21 @@ public class RController {
 		
 	}
 	
-	/*
+	
 	
 	@PostMapping("CadastrarFuncionario")
-	public ResponseEntity<Funcionario> cadastrarPessoa(@RequestBody Funcionario funcionario){
+	public  ResponseEntity<Funcionario> cadastrarFuncionario( Funcionario funcionario){
 		
-		Funcionario funcionarioCadastro = mFuncionarioService.cadastrarPessoa(funcionario);
+		Funcionario funcionarioCadastro = mFuncionarioService.salvarFuncionario(funcionario);
 		
 		return ResponseEntity.ok(funcionarioCadastro);
 		
 		
 	}
 	
-	*/
+	
+	
+	/*
 	
 	@PostMapping("CadastrarFuncionario")	
 	public String form(Funcionario funcionario){
@@ -52,4 +59,6 @@ public class RController {
 		return "redirect:CadastrarFuncionario";
 		
 	}
+	
+	*/
 }
