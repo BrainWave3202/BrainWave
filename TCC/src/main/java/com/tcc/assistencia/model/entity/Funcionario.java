@@ -1,4 +1,4 @@
-package com.tcc.assistencia.entity;
+package com.tcc.assistencia.model.entity;
 
 
 import java.util.Objects;
@@ -21,6 +21,8 @@ public class Funcionario {
 	@Column()
 	private String nome;
 	
+	@Column()
+	private String senha;
 	
 	@Column()
 	private String email;
@@ -31,6 +33,16 @@ public class Funcionario {
 	
 
 	
+
+
+	public String getSenha() {
+		return senha;
+	}
+
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
 
 	public String getCpf() {

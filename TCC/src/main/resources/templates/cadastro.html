@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br"> 
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    
+    <meta charset="utf-8" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link href="/styles/cadastro.css" rel="stylesheet" />
+
+    <title></title>
+
+</head>
+
+<body>
+
+    <div id="principal">
+
+        <div id="left">
+            <img src="/images/img-cadastro.jpeg" />
+        </div>
+
+        <div id="form">
+            
+            <div class="titulo">
+                <h1>Cadastro</h1>
+            </div>
+       		<p th:text="${aviso}"></p>
+          <form  method="post">
+            <input type="text" value=""  name="nome" placeholder="Nome de usuário" />
+            <input type="email" value=""  name="email" placeholder="E-mail/Nome de usuário" />
+            <input type="text" value="" name="cpf"  placeholder="cpf" />
+            <input type="password" value="" name="senha"  placeholder="Senha"/>
+            <button type="submit" class="btn_cadastro">Cadastre-se</button>
+          </form> 
+
+            <br />
+            <hr / style="width: 50%;">
+            <br />
+
+	      <label>Já tem uma conta?</label>
+	      
+	      <form action="login" method="get">
+	          <button type="submit" class="btn_logar">Login</button>
+		  </form>  
+		  
+        </div>
+        
+    </div>
+    
+</body>
+
+</html>

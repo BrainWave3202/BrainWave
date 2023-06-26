@@ -1,12 +1,12 @@
-package com.tcc.assistencia.service;
+package com.tcc.assistencia.model.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tcc.assistencia.entity.Funcionario;
-import com.tcc.assistencia.repository.FuncionarioRepository;
+import com.tcc.assistencia.model.entity.Funcionario;
+import com.tcc.assistencia.model.repository.FuncionarioRepository;
 
 @Service
 public class FuncionarioService {
@@ -32,6 +32,13 @@ public class FuncionarioService {
 		return mFuncionarioRepository.findById(id).orElse(null);
 	
 	}
+	
+	public Funcionario buscaFuncionarioPorEmail(String email) {
+		
+		return mFuncionarioRepository.findByEmail(email);
+	}
+	
+	
 	
 	public void excluirFuncionario(Long id) {
 		

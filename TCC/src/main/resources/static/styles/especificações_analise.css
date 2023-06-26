@@ -1,0 +1,220 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300&family=Roboto:wght@300;400;700&display=swap');
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Poppins';
+    background-color: #D9D9D9;
+}
+
+.img_brain{
+    width: 120px;
+}
+
+.header,
+.navigation_header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header{
+    background-color: #FFFFFF;
+    box-shadow: 1px 1px 4px #6f6f6f;
+    height: 3.5em;
+    justify-content: space-between;
+    padding: 0 10%;
+}
+
+.header_fixo{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+}
+
+.navigation_header{
+    gap: 2.7em;
+}
+
+.navigation_header a{
+    text-decoration: none;
+    color: #58A0E2;
+    transition: 0.8s;
+    font-weight: bold;
+}
+
+.navigation_header a:hover{
+    color: rgb(56, 56, 56);
+}
+
+.content {
+    text-align: center;
+    padding-top: 5em;
+    height: 100vh;
+    transition: 1s;
+}
+
+.container{
+    padding: 3.5rem;
+    display: flex;
+    justify-content:space-around;
+}
+
+.usuario{
+    width: 245px;
+    height: 270px;
+    background-color:#ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    border-radius: 5px;
+    box-shadow: 0 7px 7px rgba(0, 0, 0, 0.2);
+    
+}
+
+.icon_user{
+    width: 90px;
+    height: 90px;
+}
+
+.especificação{
+    width: 600px;
+    height: 500px;
+    background-color:#ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;   
+    border-radius: 5px; 
+    box-shadow: 0 7px 7px rgba(0, 0, 0, 0.2);
+}
+
+
+.manutenção{
+    width: 520px;
+    height: 390px;
+    background-color: #D9D9D9;
+    display: flex;
+    margin-top: 12px;
+}
+
+.informacoes{
+    width: 50%;
+    height: 100%;
+    background-color: /*red*/;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 10px;
+}
+
+.imagens{
+    width: 50%;
+    height: 100%;
+    background-color: /*blue*/;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.img_celular{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 45px;
+}
+
+.celular_quebrado{
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+}
+
+.botao_chat{
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    margin-right: 10px;
+    margin: 10px;
+}
+
+.chat_btn {
+    width: 50px;
+    height: 50px ; 
+}
+
+.aceitar{
+    border: none;
+    background-color: #D9D9D9;
+    cursor: pointer;
+}
+.negar{
+    border: none;
+    background-color: #D9D9D9;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+dialog::backdrop{
+    background-color: #00000085;
+    backdrop-filter: blur(2px);
+}
+
+dialog{
+    width: 40%;
+    height: 200px;
+    text-align: center;
+    border: 1px #6f6f6f;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.644);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+    z-index: ;
+    position: absolute;
+    top: 250px;
+    left: 450px;
+    padding: 5px;
+    display: ;
+}
+
+.fechar{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    background-color: red;
+    font-size: 20px;
+    border: none;
+    transition: 0.4s;
+}
+
+.fechar:hover{
+    text-shadow: #6f6f6f;
+    background-color: #808080;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+}
+
+.botoes{
+    display: flex;
+    gap: 13px;
+    margin-left: 5px;
+}
+
+
+
+

@@ -1,0 +1,266 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300&family=Roboto:wght@300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Poppins';
+    background-color: #D9D9D9;
+}
+
+.img_brain{
+    width: 120px;
+}
+
+.header,
+.navigation_header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header{
+    background-color: #FFFFFF;
+    box-shadow: 1px 1px 4px #6f6f6f;
+    height: 3.5em;
+    justify-content: space-between;
+    padding: 0 10%;
+}
+
+.navigation_header{
+    gap: 2.7em;
+}
+
+.navigation_header a{
+    text-decoration: none;
+    color: #58A0E2;
+    transition: 0.8s;
+    font-weight: bold;
+}
+
+.navigation_header a:hover{
+    color: rgb(56, 56, 56);
+}
+
+.content {
+    text-align: center;
+    padding-top: 5em;
+    height: 100vh;
+    transition: 1s;
+}
+
+.container{
+    padding: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+.titulo{
+    background-color: white;
+    height: 15vh;
+    width: 85svw;
+    display: flex;
+    justify-content: ;
+    align-items: end;
+    flex-direction: row;
+    box-shadow: 10px 5px 5px  rgba(0, 0, 0, 0.2);
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+}
+
+.titulo_h1{
+    margin-left: 70px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.principal{
+    width: 85vw;
+    height: 150vh;
+    background-color: white;
+    box-shadow: 10px 5px 5px  rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    border: 1px  #6f6f6f;
+    display: flex;
+    border-radius: 0 0 10px 10px;
+}
+
+.lado_esquerdo{
+    width: 50%;
+    height: 100%;
+    background-color: ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.svc_1{
+    width: 500px;
+    height: 50vh;
+    background-color: #D9D9D9;
+    box-shadow: 10px 5px 5px  rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.textos_svc1{
+    width: 100%;
+    height: 50%;
+    background-color: ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 6px;
+}
+
+.celular_quebrado{
+    width: 120px;
+    height: 120px;
+}
+
+.img_svc1{
+    display: flex;
+    margin-top: 5px;
+    width: 100%;
+    height: 50%;
+    background-color: ;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-left: px;
+}
+
+.txt{
+    display: flex;
+    justify-content: ;
+    flex-direction: column;
+    margin-left: 6px;
+}
+
+.txt1{
+    color: green;
+}
+
+.svc_2{
+    width: 500px;
+    height: 50vh;
+    background-color: #D9D9D9;
+    box-shadow: 10px 5px 5px  rgba(0, 0, 0, 0.2);
+}
+
+
+.note_quebrado{
+    width: 120px;
+    height: 120px;
+}
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+.lado_direito{
+    width: 50%;
+    height: 100%;
+    background-color: ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.svc_direita_1{
+    width: 500px;
+    height: 50vh;
+    background-color: #D9D9D9;
+    box-shadow: 10px 5px 5px  rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.textos_direita1{
+    width: 100%;
+    height: 50%;
+    background-color: ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 6px;
+}
+
+.celular_quebrado{
+    width: 120px;
+    height: 120px;
+}
+
+.img_direita_svc1{
+    display: flex;
+    margin-top: 5px;
+    width: 100%;
+    height: 50%;
+    background-color: ;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-left: px;
+}
+
+.svc_direita_2{
+    width: 500px;
+    height: 50vh;
+    background-color: #D9D9D9;
+    box-shadow: 10px 5px 5px  rgba(0, 0, 0, 0.2);
+}
+
+.txt_direita{
+    display: flex;
+    justify-content: ;
+    flex-direction: column;
+    margin-left: 6px;
+}
+
+.txt_direita1{
+    color: red;
+}
+
+.btn_acompanhar{
+    width: 160px;
+    height: 45px;
+    border-radius: 10px;
+    transition: 0.4s;
+    cursor: pointer;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+    border: 1px solid #d9d9d9;
+    font-size: 10px;
+    margin-left: 100px;
+}
+
+.btn_acompanhar:hover{
+    text-shadow: #6f6f6f;
+    background-color: #31ff2d;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgb(21, 126, 0);
+}
+
+
+
+
+
+
