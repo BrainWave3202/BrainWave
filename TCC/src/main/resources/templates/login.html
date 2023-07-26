@@ -19,11 +19,11 @@
             <div class="assistence">
                     <h1>Techinical Assistence</h1>
             </div> 
-            <p th:text="${aviso}"></p>
-       		<form method="post">
+            <p th:if="${aviso}" th:text="${aviso}"></p>
+       		<form th:action="@{/api/v1/login}" method="post">
 			
-			<input type="user" value=""  name="email" valueclass="user" placeholder="Insira seu email" />
-            <input type="text" value="" name="senha" class="senha" placeholder="Senha" />
+			<input type="email"  name="email" class="user" placeholder="Insira seu email" />
+            <input type="password"  name="senha" class="senha" placeholder="Senha" />
             <br />
 			<button type="submit" class="btn_login">Login</button>
             </form>

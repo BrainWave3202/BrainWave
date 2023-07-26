@@ -2,14 +2,24 @@ package com.tcc.assistencia.model.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.tcc.assistencia.model.entity.Funcionario;
 import com.tcc.assistencia.model.repository.FuncionarioRepository;
 
+
+
+
+
+
 @Service
 public class FuncionarioService {
+	  
+	
 	
 	@Autowired
 	private FuncionarioRepository mFuncionarioRepository;
@@ -34,9 +44,35 @@ public class FuncionarioService {
 	}
 	
 	public Funcionario buscaFuncionarioPorEmail(String email) {
+		Funcionario funcionario = mFuncionarioRepository.findByEmail(email);
 		
-		return mFuncionarioRepository.findByEmail(email);
+		return funcionario;
+		
+		
 	}
+	public Boolean validacaoLogin(String email, String senha ) {
+	   
+		try {
+			
+		Funcionario funcionarioLogin = buscaFuncionarioPorEmail(email);
+			
+			
+			if(funcionarioLogin.getSenha().equals(senha)) {
+				return  true;
+				}
+			
+			return false;
+				
+		}catch (EmptyResultDataAccessException  e) {
+			
+			return false;
+			
+		}
+		
+		
+		
+	}
+	
 	
 	
 	

@@ -7,27 +7,31 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tcc.assistencia.model.entity.Funcionario;
+import com.tcc.assistencia.model.repository.FuncionarioRepository;
 import com.tcc.assistencia.model.service.FuncionarioService;
 
 @Controller
 @RequestMapping("api/v1/")
-public class RController {
+public class AuthController {
 	
 	@Autowired
 	private FuncionarioService mFuncionarioService;
 
-	
+	//Mapeamento cadastro funcionario
 	@GetMapping("CadastrarFuncionario")
-	public String form(){
+	public String form(Funcionario funcionario){
 		
 		return "cadastro";
 		
 	}
 	
+	//Mapeamento login funcionario
 	@GetMapping("login")
 	public String redirecionaParaLogin() {
 		
@@ -35,12 +39,40 @@ public class RController {
 	
 	}
 	
+	//Mapeamento tela inicial 
 	@GetMapping("tela_inicial")
 	public String telaInicial() {
 		return "tela_inicial";
 	}
 	
+	//Validacao de login 
 	@PostMapping("login")
+	public String login(Funcionario funcionario, Model model) {
+		 String email = funcionario.getEmail().trim();
+	     String senha = funcionario.getSenha().trim();
+	     
+	     if (email.isEmpty() || senha.isEmpty()) {
+		        model.addAttribute("aviso", "Preencha todos os campos.");
+		        return "login";
+		    }
+	     
+	     try {
+	     boolean loginValidado = mFuncionarioService.validacaoLogin(email, senha);
+	     if(loginValidado) {
+	    	 
+	    	 return "redirect:tela_inicial";
+	     	}
+	     	model.addAttribute("aviso", "Credenciais inválidas. Verifique seu email e senha.");
+	 		return "login";
+	     }catch (Exception e) {
+	    	 model.addAttribute("aviso", "Credenciais inválidas. Verifique seu email e senha.");
+	 		return "login";
+		}
+	  
+	    
+	}
+	
+	/*
 	public String validaLogin(Funcionario funcionario, Model model) {
 		try {
 			if(funcionario.getEmail().equals("")) {
@@ -64,9 +96,29 @@ public class RController {
 		}
 		
 	}
-	
-	
+	*/
+	//Cadastro de funcionario
 	@PostMapping("CadastrarFuncionario")
+	public String cadastrarFuncionario(@ModelAttribute Funcionario funcionario, Model model, RedirectAttributes redirectAttributes) {
+	    if (funcionario.getNome().isEmpty() || funcionario.getEmail().isEmpty() || funcionario.getCpf().isEmpty() || funcionario.getSenha().isEmpty()) {
+	        model.addAttribute("aviso", "Preencha todos os campos.");
+	        return "cadastro";
+	    }
+	  
+	    redirectAttributes.addFlashAttribute("cadastrado", "cadastro sucedido!!");
+   
+	    mFuncionarioService.salvarFuncionario(funcionario);
+
+	    // Redireciona para a página de cadastro novamente, limpando o formulário
+	    return "redirect:CadastrarFuncionario";
+	}
+	
+	
+	
+	
+	
+	/*
+	 * @PostMapping("CadastrarFuncionario")
 	public String cadastrarFuncionario(Funcionario funcionario, Model model){
 		if(funcionario.getNome().equals("")) {
 			model.addAttribute("aviso", "Insira o nome");
@@ -86,7 +138,7 @@ public class RController {
 		model.addAttribute("aviso", "Cadastro bem-sucedido");
 		return "cadastro";
 	}
-	
+	*/
 	
 	
 	
