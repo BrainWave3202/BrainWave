@@ -1,5 +1,7 @@
 package com.tcc.assistencia.model.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +15,12 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
 	
 	@Query("SELECT f FROM Funcionario f WHERE f.email = :funcionarioEmail")
 	Funcionario findByEmail(@Param("funcionarioEmail") String funcionarioEmail);
+	
+	@Query("SELECT f FROM Funcionario f WHERE f.id % 2 = 0")
+	List<Funcionario> findByIdPar();
 
+	@Query("SELECT f FROM Funcionario f WHERE f.id % 2 = 1")
+	List<Funcionario> findByIdImpar();
 	
 		
 }

@@ -39,7 +39,9 @@ body{
     text-decoration: none;
     color: #58A0E2;
     transition: 0.8s;
+    font-size: 18px;
     font-weight: bold;
+    
 }
 
 .navigation_header a:hover{
@@ -194,6 +196,16 @@ body{
     margin-top: 6px;
     margin-left: 6px;
 }
+
+.butaoCabecalho{
+    background:none;
+    border:0px;
+    cursor: pointer;
+    text-align: center;
+  
+
+}
+
 
 
 

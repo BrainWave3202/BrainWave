@@ -15,19 +15,20 @@
         </div>
     
             <div class="navigation_header">
-              <a th:href="@{Admin}" class="navigation_header">voltar</a>
+              <a th:href="@{controleFuncionario}" class="navigation_header">voltar</a>
        
         	  <a th:href="@{login}" class="navigation_header">Sair</a>
             </div>
     </div>
 
-    <div class="container">
+    <div class="container" style="    display: flex;
+    flex-direction: column;">
         <div class="titulo">
             <h1 class="txt1">Cadastro</h1>
-            <h1 class="txt2">Cliente</h1>
+            <h1 class="txt2">funcionario</h1>
         </div>
 		
-		<Form th:action="@{/api/v1/CadastroCliente}"  th:object="${cliente}" method="post">
+		<Form th:action="@{/api/v1/CadastroFuncionario}"  th:object="${funcionario}" method="post">
             <div class="credenciais">
                 <div class="lado1">
                     
@@ -66,8 +67,19 @@
                 
 
                                          
-                    </div>
+                </div>
+              
             </div>
+            <div style="display: flex;
+            justify-content: center;">
+                <select id="Cargo" name="Cargo" th:field="*{Cargo_Id}" placeholder="Cargo" class="campoDeFormulario" required >
+   			
+                    <option  value="">Cargo</option>   
+                    <option  value="1">funcionario</option>
+                    <option  value="2">Administrador</option>
+            
+                </select><br>
+                </div>
 
                 <div class="div_botao">
                     <button>Cadastrar</button>

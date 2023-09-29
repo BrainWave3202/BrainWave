@@ -13,7 +13,7 @@ body{
 }
 
 .img_brain{
-    width: 120px;
+    width: 10vw;
 }
 
 .header,
@@ -26,13 +26,13 @@ body{
 .header{
     background-color: #FFFFFF;
     box-shadow: 1px 1px 4px #6f6f6f;
-    height: 3.5em;
+    height: 3vw;
     justify-content: space-between;
     padding: 0 10%;
 }
 
 .navigation_header{
-    gap: 2.7em;
+    gap: 2vw;
 }
 
 .navigation_header a{
@@ -40,6 +40,7 @@ body{
     color: #58A0E2;
     transition: 0.8s;
     font-weight: bold;
+    font-size: 1vw;
 }
 
 .navigation_header a:hover{
@@ -54,7 +55,7 @@ body{
 }
 
 .container{
-    padding: 3.5rem;
+    padding: 4vw;
     display: flex;
     flex-direction: column;
     justify-items: center;
@@ -65,40 +66,44 @@ body{
     background-color: white;
     height: 15vh;
     width: 85svw;
-    display: flex;
+    display: grid;
     justify-content: ;
-    align-items: end;
+    align-items: center;
     flex-direction: row;
-    box-shadow: 10px 5px 5px  rgba(0, 0, 0, 0.2);
+    box-shadow: 1vw 1vw 1vw  rgba(0, 0, 0, 0.2);
     border-radius: 10px 10px 0 0;
     font-weight: bold;
 }
 
 .titulo_h1{
-    margin-left: 70px;
+   
     font-weight: bold;
-    font-size: 18px;
+    font-size: 1vw;
+    text-align: center;
 }
 
 .principal{
     width: 85vw;
-    height: 150vh;
+    
     background-color: white;
-    box-shadow: 10px 5px 5px  rgba(0, 0, 0, 0.2);
+    box-shadow: 1vw 1vw 1vw  rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     border: 1px  #6f6f6f;
     display: flex;
     border-radius: 0 0 10px 10px;
+    
 }
 
 .lado_esquerdo{
-    width: 50%;
+    width: 30%;
     height: 100%;
     background-color: ;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
+    align-content: space-between;
 }
 
 .svc_1{
@@ -161,7 +166,18 @@ body{
     height: 120px;
 }
 
+.espacamentoLista{
+    margin-bottom: 5%;
 
+
+
+}
+
+.estiloLi{
+    margin-bottom:20%;
+    list-style:none;
+
+}
 
 
 
@@ -181,28 +197,30 @@ body{
     height: 100%;
     background-color: ;
     display: flex;
-    flex-direction: column;
+    flex-direction: row-reverse;
     justify-content: space-evenly;
     align-items: center;
+    
 }
 
 .svc_direita_1{
-    width: 500px;
-    height: 50vh;
+    width: 260%;
+    
     background-color: #D9D9D9;
-    box-shadow: 10px 5px 5px  rgba(0, 0, 0, 0.2);
+    box-shadow: 1vw 1vw 1vw  rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
+    align-items: self-end;
 }
 
 .textos_direita1{
     width: 100%;
     height: 50%;
-    background-color: ;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    margin-left: 6px;
+   
+    font-size: 1.2vw;
 }
 
 .celular_quebrado{
@@ -256,8 +274,33 @@ body{
     text-shadow: #6f6f6f;
     background-color: #31ff2d;
     box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
-    border: 2px solid rgb(21, 126, 0);
+    border: 2px solid 
+    rgb(21, 126, 0);
 }
+
+.TamUL{
+    width: 45%;
+}
+.btnServicos {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    
+    width: 100%;
+    text-align: left; /* Alinhe o texto à esquerda */
+}
+.butaoCabecalho{
+    background:none;
+    border:0px;
+    cursor: pointer;
+    text-align: center;
+  
+}
+
+
+
 
 
 

@@ -217,4 +217,10 @@ dialog{
 
 
 
-
+.butaoCabecalho{
+    background:none;
+    border:0px;
+    cursor: pointer;
+    text-align: center;
+  
+}

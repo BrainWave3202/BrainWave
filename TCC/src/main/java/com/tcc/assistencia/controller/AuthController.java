@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tcc.assistencia.model.entity.Funcionario;
@@ -99,19 +100,27 @@ public class AuthController {
 	*/
 	//Cadastro de funcionario
 	@PostMapping("CadastrarFuncionario")
-	public String cadastrarFuncionario(@ModelAttribute Funcionario funcionario, Model model, RedirectAttributes redirectAttributes) {
-	    if (funcionario.getNome().isEmpty() || funcionario.getEmail().isEmpty() || funcionario.getCpf().isEmpty() || funcionario.getSenha().isEmpty()) {
-	        model.addAttribute("aviso", "Preencha todos os campos.");
-	        return "cadastro";
-	    }
-	  
+	public String cadastrarFuncionario(@RequestParam("codigoValidacao") String codigoValidacao, @ModelAttribute Funcionario funcionario, Model model, RedirectAttributes redirectAttributes) {
+		
+		
+		if(codigoValidacao.equals("12345679")) {
+		
 	    redirectAttributes.addFlashAttribute("cadastrado", "cadastro sucedido!!");
    
 	    mFuncionarioService.salvarFuncionario(funcionario);
 
 	    // Redireciona para a página de cadastro novamente, limpando o formulário
 	    return "redirect:CadastrarFuncionario";
+		}
+		
+		String script = "showErrorModal('codigo invalido');";
+		model.addAttribute("script", script);
+
+		model.addAttribute("cadastrado", "codigo invalido");
+		return "cadastro";
 	}
+	
+	
 	
 	
 	

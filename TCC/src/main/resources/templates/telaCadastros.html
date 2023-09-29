@@ -13,33 +13,42 @@
         <div style="top: 4px;position: relative;" class="logo_header">
             <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
         </div>
-    
+
             <div class="navigation_header">
-          
-        	<form action="login" method="get">
+            
+        	
+       		<a th:href="@{tela_inicial}" class="navigation_header">voltar</a>
+            
        		<a th:href="@{login}" class="navigation_header">Sair</a>
-       	 	</form>
+       	 	
             </div>
+
     </div>
 
         <div class="container">
-            <div class="principal">
-             	
-             	<form action="telaCadastros" method="get">
+            <h1 style="text-align: center;">Cadastros</h1>
+            <div class="principal"> 	
+             	<form action="Admin" method="get">
+                <input type="text" name="parametro" style="display: none;" th:value="${1}" />
                 <button class="btn_1"><img src="/images/adc_user.png" alt=""></button>
                 </form>
-                <form action="Servicos_previa" method="get">
-                <button class="btn_1"><img src="/images/serviços.png" alt=""></button>
+                <form action="controleFuncionario" method="get">
+                <input type="text" name="parametro" style="display: none;" th:value="${2}" />
+                <button class="btn_1"><img src="/images/funcionariosof.png" alt=""></button>
+                </form>
+                <form action="Admin" method="get">
+                <input type="text" name="parametro" style="display: none;" th:value="${3}" />
+                <button class="btn_1"><img src="/images/servico-de-gestao.png" alt=""></button>
                 </form>
             </div>
             
                 <div class="titulos">
                     
-                    <h2>Cadastro</h2>
+                    <h2>Cliente</h2>
                   
-                    <h2>Serviços</h2>
+                    <h2>Funcionarios</h2>
 
-                    
+                    <h2>Serviços</h2>
                 
                 </div>
 

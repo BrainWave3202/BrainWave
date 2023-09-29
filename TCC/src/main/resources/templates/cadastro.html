@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <link href="/styles/cadastro.css" rel="stylesheet" />
+    <script src="/js/modal.js"></script>
 
     <title></title>
 
@@ -26,29 +27,96 @@
             <div class="titulo">
                 <h1>Cadastro</h1>
             </div>
-       		<p th:if="${aviso}" th:text="${aviso}" style="color: red;"></p>
-       		<p th:if="${cadastrado}" th:text="${cadastrado}" style="color: rgb(255, 128, 255);"></p>
-          <form  th:action="@{/api/v1/CadastrarFuncionario}" th:object="${funcionario}" method="post">
-            <input type="text" id="nome" name="nome" th:field="*{nome}" placeholder="Nome de usuário" required><br>
-            <input type="email" id="email"  name="email" th:field="	*{email}" placeholder="E-mail/Nome de usuário" required><br>
-            <input type="text" id="cpf" name="cpf" th:field="*{cpf}" placeholder="cpf" required><br>
-            <input type="password" id="senha" name="senha" th:field="*{senha}" placeholder="Senha" required><br>
-            <button type="submit" class="btn_cadastro">Cadastre-se</button>
-          </form> 
+            
+            <script th:inline="javascript" th:text="${script}"></script>
 
+            <div id="myModal" class="modal" >
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal();">&times;</span>
+                   <p id="errorMessage"  >Mensagem de erro aqui.</p>
+                </div>
+            </div>
+          
+
+            <p th:if="${cadastrado}" th:text="${cadastrado}" style="color: rgb(255, 128, 255);"></p>
+       		
+       		
+            <form  th:action="@{/api/v1/CadastrarFuncionario}" th:object="${funcionario}" method="post" style="text-align: center;"  >
+            <div class="estForm">
+            <div style="margin-right: 3vw;">
+                
+            <input type="text" id="nome" name="nome" th:field="*{nome}" placeholder="Nome de usuário" class="campoDeFormulario" required><br>
+           
+            <input type="email" id="email"  name="email" th:field="	*{email}" placeholder="E-mail/Nome de usuário" class="campoDeFormulario" required><br>
+           
+            <input type="text" id="cpf" name="cpf" th:field="*{cpf}" placeholder="cpf" class="campoDeFormulario" required><br>
+
+            <select id="estado" name="estado" th:field="*{UF}" placeholder="Estado" class="campoDeFormulario" required>
+   			
+                <option  value="">Estado</option>  
+   			
+			</select><br>
+           
+            <input type="Date" id="DataDeNasc" name="DataDeNasc" th:field="*{dataDeNasc}" placeholder="DataDeNasc" class="campoDeFormulario" required><br>
+            
+            <select id="Cargo" name="Cargo" th:field="*{Cargo_Id}" placeholder="Cargo" class="campoDeFormulario" required >
+   			
+                <option  value="">Cargo</option>   
+                   <option  value="1">funcionario</option>
+                   <option  value="2">Administrador</option>
+    
+                </select><br>
+            
+            </div>
+            <div>
+            <input type="text" id="Cep" name="Cep" th:field="*{Cep}" placeholder="Cep" class="campoDeFormulario" required><br>
+
+            <input type="text" id="Cidade" name="Cidade" th:field="*{Cidade}" placeholder="Cidade" class="campoDeFormulario" required><br>
+               
+            <input type="text" id="Bairro" name="Bairro" th:field="*{Bairro}" placeholder="Bairro" class="campoDeFormulario" required><br>
+                      
+            <input type="text" id="Logradouro" name="Logradouro" th:field="*{Logradouro}" placeholder="Longradouro" class="campoDeFormulario" required><br>
+            
+            <input type="text" id="complemento" name="complemento" th:field="*{complemento}" placeholder="complemento" class="campoDeFormulario" required><br>
+		
+            <input type="password" id="senha" name="senha" th:field="*{senha}"  placeholder="Senha" required><br>
+            </div>
+            </div>
+            <input type="text" id="codigoValidacao" name="codigoValidacao" placeholder="Codigo" /><br>
+            <button type="submit" class="btn_cadastro">Cadastre-se</button>
+            
+          </form> 
+			
             <br />
             <hr / style="width: 50%;">
             <br />
-
+			
 	      <label>Já tem uma conta?</label>
-	      
+	      	
 	      <form action="login" method="get">
 	          <button type="submit" class="btn_logar">Login</button>
 		  </form>  
-		  
+		  	
         </div>
         
     </div>
+    <script>
+	    const estados = [
+	        "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", 
+	        "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", 
+	        "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+	    ];
+
+        const selectEstado = document.getElementById("estado");
+        
+        estados.forEach(sigla => {
+            const option = document.createElement("option");
+            option.value = sigla;
+            option.text = sigla;
+            selectEstado.appendChild(option);
+        });
+</script>
+    
     
 </body>
 

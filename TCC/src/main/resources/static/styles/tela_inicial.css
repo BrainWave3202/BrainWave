@@ -19,6 +19,7 @@ body{
     width: 120px;
 }
 
+
 .header,
 .navigation_header{
     display: flex;
@@ -75,7 +76,7 @@ body{
 .principal{
     width: 50vw;
     height: 35vh;
-    background-color: /*red*/;
+  
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -107,11 +108,18 @@ button:hover{
 
 
 .titulos{
-    background-color: /*blue*/;
+  
     width: 50vw;
     height: 10vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    gap: 25px;
+
+}
+.butaoCabecalho{
+    background:none;
+    border:0px;
+    cursor: pointer;
+    text-align: center;
+  
 }

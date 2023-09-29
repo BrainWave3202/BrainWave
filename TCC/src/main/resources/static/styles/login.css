@@ -38,6 +38,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items:center;
+    text-align: center;
     justify-content: center;
     margin-left: 100px;
 }
@@ -68,6 +69,7 @@ body{
     cursor: pointer;
     transition: 0.4s;
     box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+    
 }
 
 .btn_login:hover{
@@ -85,7 +87,7 @@ body{
     color: #4F5956; 
     padding: 50px;  
     text-align: center;
-    margin-top: 70px;
+    
 }
 
 .user::placeholder{
@@ -97,12 +99,40 @@ body{
 }
 
 .direcionamento{
-    background-color: ;
+  
     width: 37vw;
     display: flex;
     justify-content: center;
     margin-top: 35px;
     font-size: 18px;
     color: red;
+}
+
+.btn_cadastrar{
+    background: cornflowerblue;
+    color: white;
+    border: 1px #d9d9d9;
+    border-radius: 3.14px;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+    padding: 8px 30px;
+}
+
+.btn_cadastrar:hover{
+    text-shadow: #6f6f6f;
+    background-color: #04f000;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+}
+
+.linha{
+    width: 100%;
+    color:red;
+    size: 2;
+}
+
+.alinBtnCadastrar{
+
+    display: flex;
+    justify-content: space-around;
+
 }
 

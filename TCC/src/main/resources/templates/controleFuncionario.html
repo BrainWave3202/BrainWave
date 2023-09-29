@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+				 xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Cliente</title>
+    <link rel="stylesheet" href="/styles/controleInformacoes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+   
+
+</head>
+<body>
+    <div class="header" id="header">
+        <div class="logo_header">
+            <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
+        </div>
+    
+            <div class="navigation_header">
+              <a th:href="@{telaCadastros}" class="navigation_header">voltar</a>
+       
+        	  <a th:href="@{login}" class="navigation_header">Sair</a>
+            </div>
+    </div>
+    <div class="container">
+
+        <!-- Página de Lista de Clientes (lista-clientes.html) -->
+    <div  class="titulo">
+        <div class="tamTitulo">
+        <div class="caixa-de-pesquisa">
+        
+            <i class="icone-pesquisa">🔍</i>
+            <input type="text" id="campoDeTexto" class="campo-de-texto" placeholder="Pesquisar...">
+            
+        </div>
+        <a style="color: black;display: flex;align-items: center;border: none;text-decoration: none" th:href="@{CadastroFuncionario}">
+            <i class="fas fa-user-plus" style="font-size: 80px;"></i>
+        </a>
+       
+
+        </div>
+    </div>
+    <p th:text="${texto}"></p>
+    <div class="principal">
+        <div class="divTable">        
+            <table id="tabelaClientes">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>  
+                        <th>CPF</th>
+                        <th>Editar/Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="funcionario : ${funcionarios}">
+                        <td th:text="${funcionario.nome}" ></td>
+                        <td th:text="${funcionario.email}" ></td>
+                        <td th:text="${funcionario.cpf}" ></td>
+                        <td class="btnEdEx">
+
+                                <!-- Símbolo de Edição (Lápis) -->
+                           
+                                <button class="botaoAbrirMenu" th:id="${funcionario.id}" >
+                                    <i class="fas fa-pencil-alt tamIcone"></i>
+                                </button>
+                                
+                                
+                            
+                            <form th:action="@{/api/v1/controleFuncionario/{id}(id=${funcionario.id})}"  method="post">    
+                                <button  type="submit" class="estiloBotao">
+                                <i class="fas fa-times tamIcone"></i>
+                                </button>
+                            </form>    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+<!-- Botão para abrir o modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" id="closeModalButton">&times;</span>
+        <div class="modal-title">Perfil do Usuario</div>
+        <form th:action="@{/api/v1/controleFuncionario}"  th:object="${funcionario}" method="post">  
+            <div class="input-area">
+                    <div class="credenciais">
+                        <div class="lado1">
+                            <input style="display: none;" id="editId"  th:field="*{id}" type="hidden" />
+
+                            <p class="textUpadte">Nome: </p>
+                            <input type="text" id="editNome" name="nome" th:field="*{nome}"  placeholder="Nome de usuário" class="campoDeFormulario" required><br>
+                    
+                            <p class="textUpadte">Email: </p>
+                            <input type="text" id="editEmail" th:field="*{email}" placeholder="E-mail/Nome de usuário" class="campoDeFormulario" required ><br>
+                            
+                            <p class="textUpadte">DataDeNasc: </p>
+                            <input type="Date" id="editDataDeNasc" name="dataDeNasc" th:field="*{dataDeNasc}" placeholder="DataDeNasc" class="campoDeFormulario" required><br>
+                            
+                            <p class="textUpadte">CPF: </p>    
+                            <input type="text" id="editCpf"  th:field="*{cpf}" placeholder="cpf" class="campoDeFormulario" required><br>
+                        
+                            <p class="textUpadte">Senha: </p>
+                            <input type="text" id="editSenha"  th:field="*{senha}" placeholder="Senha" class="campoDeFormulario" required ><br>
+                        
+                        </div>
+        
+                        <div class="lado2">
+        
+                            <p class="textUpadte">Cep: </p>
+                            <input type="text" id="editCep" th:field="*{Cep}" placeholder="Cidade" class="campoDeFormulario" required><br>
+
+                            <p class="textUpadte">Cidade: </p> 
+                            <input type="text" id="editCidade" th:field="*{Cidade}" placeholder="Bairro" class="campoDeFormulario" required><br>
+
+                            <p class="textUpadte">Bairro: </p>         
+                            <input type="text" id="editBairro" th:field="*{Bairro}" placeholder="Endereço" class="campoDeFormulario" required><br>
+
+                            <p class="textUpadte">Logradouro: </p>   
+                            <input type="text" id="editLogradouro" th:field="*{logradouro}" placeholder="complemento" class="campoDeFormulario" required><br>
+                            
+                            <p class="textUpadte">Complemento: </p>   
+                            <input type="text" id="editComplemento" th:field="*{complemento}" placeholder="complemento" class="campoDeFormulario" required><br>
+                                                
+                    </div>
+                </div>
+            </div>
+            <div class="input-area">
+            
+                <select id="editEstado" name="estado"  th:field="*{uF}" placeholder="Estado" class="campoDeFormulario" style="width: 21vw;" required>
+                        
+                    <option  value="">Estado</option>  
+                    
+                </select><br>    
+            
+            </div>
+            <div class="button-area">
+                <button id="cancelButton" type="button">Cancelar</button>
+                <button id="saveButton" type="submit">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(function() {
+    // Quando um caractere é digitado no campo de texto
+    $("#campoDeTexto").on("input", function() {
+        // Obtém o valor digitado
+        var texto = $("#campoDeTexto").val();
+
+        // Faz a requisição AJAX para o servidor
+        $.ajax({
+            url: "/api/v1/Admin", // URL do endpoint no seu servidor
+            type: "GET", // ou "POST", dependendo da sua configuração
+            data: { texto: texto }, // Dados que você deseja enviar para o servidor
+            success: function(result) {
+                // Limpe o conteúdo atual da tabela
+                
+                $("#tabelaClientes tbody").empty();
+                
+                var funcionario = /*[[${funcionarios}]]*/ []; // Isso insere o valor da variável Thymeleaf "clientes" no JavaScripts   
+                // Itere sobre os resultados e adicione-os à tabela
+                $.each(clientes, function(index, funcionario) {
+                    var newRow = "<tr>";
+                    newRow += "<td>" + clientes.nome + "</td>";
+                    newRow += "<td>" + clientes.email + "</td>";
+                    newRow += "<td>" + clientes.cpf + "</td>";
+                    newRow += "<td class='btnEdEx'>";
+                    newRow += "<form th:action='@{/api/v1/tela_inicial}' method='get'>";
+                    newRow += "<button type='submit' class='botaoAbrirMenu'>";
+                    newRow += "<i class='fas fa-pencil-alt tamIcone'></i>";
+                    newRow += "</button>";
+                    newRow += "</form>";
+                    newRow += "<form th:action='@{/api/v1/Admin/{id}(id=${cliente.id})}' method='post'>";
+                    newRow += "<button type='submit' class='botaoAbrirMenu'>";
+                    newRow += "<i class='fas fa-times tamIcone'></i>";
+                    newRow += "</button>";
+                    newRow += "</form>";
+                    newRow += "</td>";
+                    newRow += "</tr>";
+                    $("#tabelaClientes tbody").append(newRow);
+                });
+
+                // Manipule a resposta do servidor aqui
+                console.log("Resposta do servidor:", clientes);
+            },
+            error: function(error) {
+                // Lida com erros de requisição aqui
+                console.error("Erro na requisição:", error);
+            }
+        });
+    });
+});
+
+// Função para abrir o modal
+var openModalButtons = document.querySelectorAll(".botaoAbrirMenu");
+var modal = document.getElementById("myModal");
+
+const estados = [
+	        "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", 
+	        "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", 
+	        "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+	    ];
+
+        const selectEstado = document.getElementById("editEstado");
+        
+        estados.forEach(sigla => {
+            const option = document.createElement("option");
+            option.value = sigla;
+            option.text = sigla;
+            selectEstado.appendChild(option);
+});
+
+
+
+openModalButtons.forEach(function(button) {
+    button.onclick = function() {
+    
+    var funcionarios = /*[[${funcionarios}]]*/[];
+    var idFuncionario = button.getAttribute("id")  
+
+    var editId = document.getElementById("editId")
+    var editNome = document.getElementById("editNome");
+    var editEmail = document.getElementById("editEmail");
+    var editDataDeNasc = document.getElementById("editDataDeNasc");
+    var editCpf = document.getElementById("editCpf");
+    var editSenha = document.getElementById("editSenha");
+    var editEstado = document.getElementById("editEstado");
+    var editCep = document.getElementById("editCep");
+    var editCidade = document.getElementById("editCidade");
+    var editBairro = document.getElementById("editBairro");
+    var editLogradouro = document.getElementById("editLogradouro");
+    var editComplemento = document.getElementById("editComplemento");
+    
+    
+
+    // Supondo que 'clientes' seja um array de objetos de cliente
+        for (var i = 0; i < funcionarios.length; i++) {
+            var funcionario = funcionarios[i];
+            console.log(idFuncionario);
+
+            var formatDateCliente = new Date(funcionario.dataDeNasc);
+
+            // Aqui, 'cliente' é um objeto que representa um cliente individual
+            // Você pode acessar as propriedades do cliente, por exemplo:
+            var id =funcionario.id
+            var nome = funcionario.nome;
+            var email = funcionario.email;
+            var cpf = funcionario.cpf;
+            var DataDeNasc = formatDateCliente.toISOString().split('T')[0];
+            var senha = funcionario.senha;
+            var complemento = funcionario.complemento;
+            var cep = funcionario.cep;
+            var cidade = funcionario.cidade;
+            var bairro = funcionario.bairro;
+            var logradouro = funcionario.logradouro;
+            var estado = funcionario.uF;
+
+            if(idFuncionario == funcionario.id){
+                editId.value = id;
+                editNome.value = nome;
+                editEmail.value = email;
+                editDataDeNasc.value = DataDeNasc;
+                editCpf.value = cpf;
+                editSenha.value = senha;
+                editComplemento.value = complemento;
+                editCep.value = cep;
+                editCidade.value = cidade;
+                editBairro.value = bairro;
+                editLogradouro.value = logradouro;
+               for (var i = 0; i < editEstado.options.length; i++) {
+                    if (editEstado.options[i].value == estado) {
+                        editEstado.options[i].selected = true;
+                        break; // Saia do loop após encontrar a opção desejada
+                    }
+                }  
+                
+                
+            }
+            // Faça o que você precisa com os dados do cliente dentro do loop
+            console.log(`Nome: ${nome}, Email: ${email}, CPF: ${cpf}`);
+           
+            console.log(funcionario);
+            console.log(funcionario.uF);
+            console.log(DataDeNasc);
+            console.log(funcionario.dataDeNasc);
+
+          
+            
+        }
+    // Faça uma solicitação AJAX para buscar informações do cliente com o ID
+    
+    modal.style.display = "block";
+    console.log("a")    
+    }
+});
+
+
+
+
+     // Função para fechar o modal
+document.getElementById("closeModalButton").onclick = function() {
+    modal.style.display = "none";
+}
+
+// Função para cancelar
+document.getElementById("cancelButton").onclick = function() {
+    modal.style.display = "none";
+}
+
+// Função para salvar (você pode adicionar a lógica de salvamento aqui)
+document.getElementById("saveButton").onclick = function() {
+    // Adicione sua lógica de salvamento aqui
+    modal.style.display = "none";
+}
+
+
+var modalContent = document.querySelector(".modal-content");
+
+// Quando o usuário clicar fora do modal, feche-o
+modal.addEventListener("click", function(event) {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+</script>
+    
+</body>
+</html>
+
+
+
+

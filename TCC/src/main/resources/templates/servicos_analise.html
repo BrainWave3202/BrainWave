@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços Prévia</title>
+
+    <link href="/styles/seriviços_andamento.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+
+</head>
+<body>
+<div class="header" id="header">
+        <div style="top: 4px;position: relative;" class="logo_header">
+            <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
+        </div>
+    
+            <div class="navigation_header">
+            <form action="Servicos_previa" method="get">
+       	 	<button class="butaoCabecalho"> <a class="navigation_header">voltar</a> </button>
+        	</form>
+        	<form action="login" method="get">
+       		<button class="butaoCabecalho"><a class="navigation_header">Sair</a></button>
+       	 	</form>
+            </div>
+    </div>
+
+    <div class="container">
+        <div  class="titulo">
+            <div  class="titulo_h1">
+                <h1 >Serviços em Analise</h1>
+            </div>
+       </div>
+       
+       <div class="principal">
+       
+	   
+        <!-------------------------------------------------------------------------------------------------------------------->        
+			<div class="lado_esquerdo" style="margin-right:9%">
+						<ul  class="TamUL">   	  
+								<li class="estiloLi" th:each="funcionario : ${funcionariosPar}">
+							 	
+									<div class="svc_direita_1">
+				            					<div class="textos_direita1">
+											    <div >
+												 	<form action="ServicoInf" method="get">
+											 		<button class="btnServicos"> 
+												             <h2 th:text="${funcionario.nome}"></h2>
+												             
+												             <br>
+												             <br>	
+												             <br>
+												             <br>
+												             <br>
+												             
+												             <br>
+												             <br>
+												             <br>
+												        
+												             <p th:text="${funcionario.email}"></p>
+												             <p th:text="${funcionario.senha}"></p>
+												      </button>     
+												      </form> 
+											          </div>
+											 </div>	
+								</div>		          
+							</li> 
+						</ul>      
+			</div> 
+			<div class="lado_esquerdo" style="margin-left:7%">
+						<ul  class="TamUL" >   	  
+							<li class="estiloLi" th:each="funcionario : ${funcionariosImpar}">
+								  <div class="svc_direita_1">
+		            					<div class="textos_direita1">
+									           <div >
+									             <h2 th:text="${funcionario.nome}"></h2>
+									             
+									             <br>
+									             <br>
+									             <br>
+									             <br>
+									             <br>
+									             <br>
+									             <br>
+									             <br>
+									             <p th:text="${funcionario.email}"></p>
+									             <p th:text="${funcionario.senha}"></p>
+									          </div>
+									 	</div>
+								  </div>          
+							 </li>  
+						</ul>      
+			</div> 
+			    
+			
+    </div>
+</body>
+</html>
+
+

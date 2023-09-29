@@ -10,47 +10,44 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Funcionario {
-
+public class Cliente {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue( strategy = GenerationType.IDENTITY	)
 	private long id;
-
+	
 	@Column()
 	private String nome;
-
+	
 	@Column()
 	private String senha;
-
+	
 	@Column()
 	private String email;
-
+	
+	@Column(name = "data_de_nasc")
+	private Date dataDeNasc;
+	
 	@Column()
 	private String cpf;
 
-	@Column(name = "data_de_nasc")
-	private Date dataDeNasc;
-
 	@Column()
 	private String logradouro;
-
-	@Column
+	
+	@Column()
 	private String cep;
-
-	@Column
+	
+	@Column()
 	private String cidade;
-
-	@Column
+	
+	@Column()
 	private String bairro;
-
-	@Column
+	
+	@Column()
 	private String uF;
-
-	@Column
+	
+	@Column()
 	private String complemento;
-
-	@Column
-	private Integer cargo_Id;
 
 	public long getId() {
 		return id;
@@ -84,6 +81,14 @@ public class Funcionario {
 		this.email = email;
 	}
 
+	public Date getDataDeNasc() {
+		return dataDeNasc;
+	}
+
+	public void setDataDeNasc(Date dataDeNasc) {
+		this.dataDeNasc = dataDeNasc;
+	}
+
 	public String getCpf() {
 		return cpf;
 	}
@@ -92,13 +97,7 @@ public class Funcionario {
 		this.cpf = cpf;
 	}
 
-	public Date getDataDeNasc() {
-		return dataDeNasc;
-	}
-
-	public void setDataDeNasc(Date dataDeNasc) {
-		this.dataDeNasc = dataDeNasc;
-	}
+	
 
 	public String getLogradouro() {
 		return logradouro;
@@ -148,16 +147,6 @@ public class Funcionario {
 		this.complemento = complemento;
 	}
 
-	public Integer getCargo_Id() {
-		return cargo_Id;
-	}
-
-	public void setCargo_Id(Integer cargo_Id) {
-		
-		this.cargo_Id = cargo_Id;
-		
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -171,8 +160,11 @@ public class Funcionario {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Funcionario other = (Funcionario) obj;
+		Cliente other = (Cliente) obj;
 		return id == other.id;
 	}
+	
+	
+
 
 }
