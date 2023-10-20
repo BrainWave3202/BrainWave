@@ -113,7 +113,7 @@ body{
 .informacoes{
     width: 50%;
     height: 100%;
-    background-color: /*red*/;
+  
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -123,7 +123,7 @@ body{
 .imagens{
     width: 50%;
     height: 100%;
-    background-color: /*blue*/;
+   
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -186,7 +186,7 @@ dialog{
     top: 250px;
     left: 450px;
     padding: 5px;
-    display: ;
+    
 }
 
 .fechar{
@@ -224,3 +224,164 @@ dialog{
     text-align: center;
   
 }
+/* Estilos para o modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+/* Estilos para o conteúdo do modal */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 40%;
+    text-align: center;
+    position: relative;
+    flex-direction: column;
+    top: 14%;
+    left: 28%;
+}
+
+/* Estilos para o título "Editar" */
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Estilos para as áreas de inserção de texto */
+.input-area {
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.input-area input {
+   
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilos para os botões */
+.button-area {
+    margin-top: 20px;
+}
+
+.button-area button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-area button:last-child {
+    margin-right: 0;
+    background-color: #dc3545;
+}
+
+/* Estilos para o botão de fechar */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.modalInformacoes{
+    margin-bottom: 10px;
+}
+
+/* Estilizando o ícone de usuário */
+.fa-user-circle {
+    font-size: 64px; /* Tamanho do ícone */
+    margin-left: 25%;
+    color: #007bff; /* Cor do ícone */
+}
+
+.credenciais{
+    width: 100%;
+   
+   
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.lado1{
+    
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: space-between;
+  
+}
+
+.lado2{
+  
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
+
+
+input::placeholder{
+    padding: 10px;
+}
+
+.textUpadte{
+    font-size: 1vw;
+    text-align: left;
+}
+
+.campoDeFormulario {  
+    padding: 0px 20px;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+    width: 16vw;
+    height: 30px;
+    background-color: #BBD6F1;
+    border-radius: 3px;
+    border: none;
+    outline: 0;
+}
+
+#editEstado{
+    height: 50px;
+}
+
+.tamTitulo{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.remove-symbol {
+    color: red; /* Define a cor vermelha */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    font-size: 50px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+.remove-symbol:hover {
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+

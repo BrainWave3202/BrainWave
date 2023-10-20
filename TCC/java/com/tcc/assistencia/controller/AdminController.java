@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tcc.assistencia.model.entity.Cliente;
 import com.tcc.assistencia.model.entity.Funcionario;
@@ -25,10 +24,6 @@ import com.tcc.assistencia.model.repository.ServicoRepository;
 import com.tcc.assistencia.model.service.ClienteService;
 import com.tcc.assistencia.model.service.FuncionarioService;
 import com.tcc.assistencia.model.service.ServicoService;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -54,9 +49,7 @@ public class AdminController {
 	
 	
 	@GetMapping("Admin")
-	public String admin(@RequestParam(required = false) String texto, Model model, Cliente cliente, HttpSession session) {
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser != null) {
+	public String admin(@RequestParam(required = false) String texto, Model model, Cliente cliente) {
 		List<Cliente> clientes = new ArrayList<>();
 		
 		List<Cliente> clientesPesquisa = new ArrayList<>();
@@ -91,10 +84,6 @@ public class AdminController {
 	    model.addAttribute("cliente", cliente); // Adicione o objeto cliente ao modelo
 		
 		return "controleCliente";
-		 }
-		    
-		return "redirect:/login";
-		    
 	}
 	
 	
@@ -121,34 +110,20 @@ public class AdminController {
 	}
 	
 	@GetMapping("controleFuncionario")
-	public String controleFuncionario(Model model,Funcionario funcionario,HttpSession session){
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser != null) {
+	public String controleFuncionario(Model model,Funcionario funcionario){
+		
 		List<Funcionario> funcionarios  = mFuncionarioService.listarFuncionario();
 		
 		model.addAttribute("funcionarios", funcionarios);
 		
 		return "controleFuncionario";
-		 }
-		    return "redirect:/api/v1/login";
 	}
 	
 	@PostMapping("controleFuncionario/{id}")
-	public String excluirRegistrosFuncionario(@PathVariable Long id,@RequestParam(name = "nome") Integer cargoId, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		Funcionario funcionario = (Funcionario) session.getAttribute("funcionario");
-
-		if(funcionario.getCargo_Id() == 1) {
-		System.out.println();
-		try {
+	public String excluirRegistrosFuncionario(@PathVariable Long id) {
+		
 		mFuncionarioService.excluirFuncionario(id);
-		}catch (Exception e) {
-			redirectAttributes.addFlashAttribute("excluir","Voce não pode excluir este funcionario porque ele esta cadastrado em algum serviço");
-		}
-		}else {
-			redirectAttributes.addFlashAttribute("excluir","Voce não pode excluir funcionarios");
-		}
-			
+		
 		
 		return "redirect:/api/v1/controleFuncionario";
 	}
@@ -165,12 +140,7 @@ public class AdminController {
 	
 	
 	@GetMapping("CadastroCliente")
-	public String cadastroCliente(Cliente cliente, HttpSession session){
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser == null) {
-			 
-			    return "redirect:/api/v1/login";	 
-		 }
+	public String cadastroCliente(Cliente cliente){
 		
 		
 		return "cadastro_cliente";
@@ -186,12 +156,8 @@ public class AdminController {
 	}
 	
 	@GetMapping("CadastroFuncionario")
-	public String cadastroFuncionario(Funcionario funcionario, HttpSession session){
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser == null) {
-			 
-			    return "redirect:/api/v1/login";	 
-		 }
+	public String cadastroFuncionario(Funcionario funcionario){
+		
 		
 		return "cadastroFuncionario";
 	}
@@ -205,12 +171,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("ControleServico")
-	public String controleServico(ServicoForm servicoForm, Model model, HttpSession session) {
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser == null) {
-			 
-			    return "redirect:/api/v1/login";	 
-		 }
+	public String controleServico(ServicoForm servicoForm, Model model) {
 		
 		List<Servico> servicos = mServicoService.listarAllServico();
 		
@@ -241,12 +202,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("CadastroServico")
-	public String cadastroServico(ServicoForm servicoForm,  Model model, HttpSession session) {
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser == null) {
-			 
-			    return "redirect:/api/v1/login";	 
-		 }
+	public String cadastroServico(ServicoForm servicoForm,  Model model) {
 		
 		List<Funcionario> funcionario =  mFuncionarioService.listarFuncionario(); 
 		model.addAttribute("funcionarios", funcionario);

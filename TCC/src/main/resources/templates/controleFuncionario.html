@@ -15,22 +15,26 @@
 </head>
 <body>
     <div class="header" id="header">
-        <div class="logo_header">
-            <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
+        <div style="position: relative;" class="logo_header">
+            <a th:href="@{tela_inicial}" class="navigation_header"> <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave"></a>
         </div>
     
-            <div class="navigation_header">
-              <a th:href="@{telaCadastros}" class="navigation_header">voltar</a>
-       
-        	  <a th:href="@{login}" class="navigation_header">Sair</a>
-            </div>
-    </div>
+        <div class="navigation_header" style="height: 100%;">
+            <form action="telaCadastros" method="get" style="height: 100%;display: flex;align-items: center;">
+       	 	<button class="butaoCabecalho"> <a class="navigation_header">voltar</a> </button>
+        	</form>
+        	<form action="login" method="get" style="height: 100%;display: flex;align-items: center;">
+       		<button class="butaoCabecalho"><a class="navigation_header">Sair</a></button>
+       	 	</form>
+        </div>
+</div>
     <div class="container">
-
+     
         <!-- Página de Lista de Clientes (lista-clientes.html) -->
     <div  class="titulo">
         <div class="tamTitulo">
         <div class="caixa-de-pesquisa">
+            
         
             <i class="icone-pesquisa">🔍</i>
             <input type="text" id="campoDeTexto" class="campo-de-texto" placeholder="Pesquisar...">
@@ -44,6 +48,7 @@
         </div>
     </div>
     <p th:text="${texto}"></p>
+
     <div class="principal">
         <div class="divTable">        
             <table id="tabelaClientes">
@@ -73,6 +78,7 @@
                             <form th:action="@{/api/v1/controleFuncionario/{id}(id=${funcionario.id})}"  method="post">    
                                 <button  type="submit" class="estiloBotao">
                                 <i class="fas fa-times tamIcone"></i>
+                                <input type="number" name="nome" th:value="${funcionario.cargo_Id}" style="display: none;" />
                                 </button>
                             </form>    
                         </td>
@@ -290,20 +296,7 @@ openModalButtons.forEach(function(button) {
             console.log(DataDeNasc);
             console.log(funcionario.dataDeNasc);
 
-          
-            
-        }
-    // Faça uma solicitação AJAX para buscar informações do cliente com o ID
-    
-    modal.style.display = "block";
-    console.log("a")    
-    }
-});
-
-
-
-
-     // Função para fechar o modal
+// Função para fechar o modal
 document.getElementById("closeModalButton").onclick = function() {
     modal.style.display = "none";
 }
@@ -328,6 +321,34 @@ modal.addEventListener("click", function(event) {
         modal.style.display = "none";
     }
 });
+          
+            
+}
+    // Faça uma solicitação AJAX para buscar informações do cliente com o ID
+    
+    modal.style.display = "block";
+    console.log("a")    
+    }
+});
+
+<!-- Inclua o script JavaScript no final da sua página HTML -->
+
+    // Verifique se o atributo "excluir" existe no modelo
+    var mensagemExclusao = /*[[${excluir}]]*/ null;
+
+    if (mensagemExclusao) {
+        // Adicione um atraso de 1 segundo (1000 milissegundos) antes de exibir o alert
+        setTimeout(function() {
+            alert(mensagemExclusao);
+        }, 500); // 1000 ms = 1 segundo
+    }
+
+
+
+
+
+
+ 
 </script>
     
 </body>

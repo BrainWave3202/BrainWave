@@ -10,16 +10,19 @@
 </head>
 <body>
     <div class="header" id="header">
-        <div class="logo_header">
-            <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
+        <div style="position: relative;" class="logo_header">
+            <a th:href="@{tela_inicial}" class="navigation_header"> <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave"></a>
         </div>
     
-            <div class="navigation_header">
-              <a th:href="@{controleFuncionario}" class="navigation_header">voltar</a>
-       
-        	  <a th:href="@{login}" class="navigation_header">Sair</a>
-            </div>
-    </div>
+        <div class="navigation_header" style="height: 100%;">
+            <form action="controleFuncionario" method="get" style="height: 100%;display: flex;align-items: center;">
+       	 	<button class="butaoCabecalho"> <a class="navigation_header">voltar</a> </button>
+        	</form>
+        	<form action="login" method="get" style="height: 100%;display: flex;align-items: center;">
+       		<button class="butaoCabecalho"><a class="navigation_header">Sair</a></button>
+       	 	</form>
+        </div>
+</div>
 
     <div class="container" style="    display: flex;
     flex-direction: column;">
@@ -32,6 +35,8 @@
             <div class="credenciais">
                 <div class="lado1">
                     
+                    
+
                     <input type="text" id="nome" name="nome" th:field="*{nome}" placeholder="Nome de usuário" class="campoDeFormulario" required><br>
                   
                     <input type="email" id="email"  name="email" th:field="	*{email}" placeholder="E-mail/Nome de usuário" class="campoDeFormulario" required><br>
@@ -46,7 +51,7 @@
 
                 <div class="lado2">
 
-                <select id="estado" name="estado" th:field="*{uF}" placeholder="Estado" class="campoDeFormulario" style="width: 441px;" required>
+                <select id="estado" name="estado" th:field="*{uF}" placeholder="Estado" class="campoDeFormulario" style="width: 440px;" required>
                        
                     <option  value="">Estado</option>  
                        
@@ -79,10 +84,10 @@
                     <option  value="2">Administrador</option>
             
                 </select><br>
-                </div>
+            </div>
 
                 <div class="div_botao">
-                    <button>Cadastrar</button>
+                    <button class="button">Cadastrar</button>
                 </div>
         </Form>     
     </div>

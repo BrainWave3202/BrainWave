@@ -12,17 +12,18 @@ GO
 
 CREATE TABLE CLIENTE(
 	ID INT IDENTITY PRIMARY KEY,
-	Nome VARCHAR (30) NOT NULL,
-	Email VARCHAR (100) NOT NULL,
-	SENHA INT  NULL,
+	Nome VARCHAR (50) NOT NULL,
+	Email VARCHAR (120) NOT NULL,
+	SENHA Varchar(100)  NOT NULL,
 	data_de_nasc DATE NOT NULL,
 	Cpf VARCHAR (11) NOT NULL, 
-	Logradouro VARCHAR (30) NOT NULL,
+	Logradouro VARCHAR (150) NOT NULL,
 	Cep VARCHAR (8) NOT NULL,
-	Cidade VARCHAR (20) NOT NULL,
-	Bairro VARCHAR (20) NOT NULL,
+	Cidade VARCHAR (50) NOT NULL,
+	Bairro VARCHAR (50) NOT NULL,
 	UF VARCHAR (2) NOT NULL,
-	Complemento VARCHAR (40) NOT NULL
+	Complemento VARCHAR (150) NOT NULL
+	acesso Int NULL,
 )
 
 GO
@@ -49,17 +50,17 @@ GO
 CREATE TABLE FUNCIONARIO(
 	ID INT IDENTITY PRIMARY KEY,
 	Nome VARCHAR (50) NOT NULL,
-	EMAIL VARCHAR (100) NOT NULL,
-	SENHA INT  NULL,
-	data_de_nasc DATE NULL,
-	Cpf VARCHAR (11)  NULL,
-	Logradouro VARCHAR (30)  NULL,
-	Cep VARCHAR (8) NULL,
-	Cidade VARCHAR (20) NULL,
-	Bairro VARCHAR (25) NULL,
+	EMAIL VARCHAR (120) NOT NULL,
+	SENHA VARCHAR (100)  NOT NULL,
+	data_de_nasc DATE NOT NULL,
+	Cpf VARCHAR (11)  NOT NULL,
+	Logradouro VARCHAR (150) NOT NULL,
+	Cep VARCHAR (8) NOT NULL,
+	Cidade VARCHAR (50) NOT NULL,
+	Bairro VARCHAR (50) NOT NULL,
 	UF VARCHAR (2) NULL,
-	Complemento VARCHAR ( 40) NULL,
-	CARGO_ID INT  NULL,
+	Complemento VARCHAR (150) NULL,
+	CARGO_ID INT NOT NULL,
 
 	FOREIGN KEY (CARGO_ID) REFERENCES CARGO (ID)
 )
@@ -69,21 +70,23 @@ CREATE TABLE Imagens (
     ID INT IDENTITY(1,1) PRIMARY KEY,
     imagem VARBINARY(MAX)
 )
+
 CREATE TABLE SERVICO(
 	ID INT IDENTITY PRIMARY KEY,
-	NomeDeServiço VARCHAR (20) NOT NULL,
-	DescriçãoDoProblema VARCHAR (500) NOT NULL,
-	ValorDoServiço INT  NULL,
-	DataDeEmissao DATE NOT NULL,
-	DataDeFinalizacao DATE  NULL,
+	nome_do_equipamento VARCHAR (20) NOT NULL,
+	descricao_do_problema VARCHAR (1000) NOT NULL,
+	descricao_de_troca VARCHAR (1000)  NULL,
+	valor_do_servico INT  NULL,
+	data_de_emissao DATE NOT NULL,
+	data_de_finalizacao DATE  NULL,
 	FUNCIONARIO_ID INT NOT NULL,
 	Cliente_ID INT NOT NULL,
-	Imagens_ID INT null,
-	
+	estado_servico INT NOT NULL,
+	imagem VARBINARY(MAX)
 
 	FOREIGN KEY (FUNCIONARIO_ID) REFERENCES FUNCIONARIO (ID),
 	FOREIGN KEY (Cliente_ID) REFERENCES CLIENTE(ID),
-	FOREIGN KEY (Imagens_ID) REFERENCES Imagens(ID)
+	
 )
 
 
@@ -106,23 +109,38 @@ CREATE TABLE PAGAMENTOSERVIÇO(
 )
 GO
 
-Select * FROM CLIENTE
+Select * FROM CLIENTE  WHERE Email = 'migarati10@gmail.com'
 
-Select * FROM ORDEMDESERVICO
+Select * FROM CLIENTE  WHERE id = 1
+
+
+Select * FROM SERVICO
 Select * FROM FUNCIONARIO
 Select * FROM Imagens
+Select * FROM CARGO
 
 
-ALTER TABLE FUNCIONARIO ALTER COLUMN EMAIL VARCHAR (125) NULL
+SELECT senha FROM Cliente WHERE email = "123456"
 
-ALTER TABLE FUNCIONARIO ADD  SENHA INT  NULL
+SELECT senha FROM Cliente WHERE email = 'migarati10@gmail.com'
 
-ALTER TABLE OD ADD  SENHA INT  NULL
+SELECT senha FROM Cliente
 
-DROP table ORDEMDESERVIÇO
+ALTER TABLE CLIENTE ALTER COLUMN SENHA VARCHAR(100) NULL
 
-DELETE FROM FUNCIONARIO 
-WHERE ID = 12; 
+ALTER TABLE SERVICO ALTER COLUMN estadoServico  Int NOT NULL
+
+
+ALTER TABLE CLIENTE ADD acesso Int NULL,
+
+ALTER TABLE SERVICO ADD  descricao_de_troca VARCHAR (300)  NULL
+
+ table SERVICO
+DROP table SERVICO
+DROP table Imagens
+
+DELETE FROM SERVICO 
+WHERE ID = 6; 
 
 ADD SENHA INT  NULL
 
@@ -131,4 +149,16 @@ INSERT INTO CARGO(NomeCargo) Values ('Funcionario')
 
 DBCC CHECKIDENT (FUNCIONARIO, RESEED, 0)
 
-	
+UPDATE
+  SERVICO
+SET
+  estadoServico = 1
+WHERE
+  id = 6
+
+  SELECT * FROM SERVICO s ORDER BY s.data_de_emissao ASC
+
+  SELECT s FROM Servico s ORDER BY s.data_de_emissao ASC
+
+  INSERT INTO CLIENTE (Nome, Email, SENHA, data_de_nasc, Cpf, Logradouro, Cep, Cidade, Bairro, UF, Complemento)
+VALUES ('Kaue', 'migarati10@gmail.com', 'senha123', '2000-01-01', '12345678901', 'Endereço do Cliente', '12345678', 'Cidade do Cliente', 'Bairro do Cliente', 'UF', 'Complemento do Cliente');

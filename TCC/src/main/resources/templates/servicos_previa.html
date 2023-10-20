@@ -7,23 +7,27 @@
     <title>Serviços Prévia</title>
 
     <link href="/styles/serviços_previa.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.24.0/index.min.js"></script>
 
 </head>
 <body>
-<div class="header" id="header">
-    <div style="top: 4px;position: relative;" class="logo_header">
-        <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
-    </div>
-
-    <div class="navigation_header">
-
-        <!--<a href="#">Notificações</a>-->
-        <a th:href="@{tela_inicial}" class="navigation_header">voltar</a>
-       
-        <a th:href="@{login}" class="navigation_header">Sair</a>
-        
+    
+    <div class="header" id="header">
+        <div style="position: relative;" class="logo_header">
+            <a th:href="@{tela_inicial}" class="navigation_header"> <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave"></a>
+        </div>
+    
+        <div class="navigation_header" style="height: 100%;">
+            <form action="tela_inicial" method="get" style="height: 100%;display: flex;align-items: center;">
+       	 	<button class="butaoCabecalho"> <a class="navigation_header">voltar</a> </button>
+        	</form>
+        	<form action="login" method="get" style="height: 100%;display: flex;align-items: center;">
+       		<button class="butaoCabecalho"><a class="navigation_header">Sair</a></button>
+       	 	</form>
         </div>
 </div>
+
+
 
     <div class="container">
             <div class="usuario">
@@ -42,47 +46,117 @@
                     	</form>
                     </div>
 
-                    <div class="info_analise">
+                    <div class="info_analise" th:if="${servicoAnalise != null}">
                         <div class="textos_analise">
-                            <h5>Manutenção de Celular<br>Tela quebrada <br>Touch não pega</h5>
-                            <h5>Aparelho xiami Redmi MI5</h5>
-                            <h5>Data do requerimento:24/01/2023 <br>Prazo Estimado de entrega: 10/02/2023</h5>
-                            <h5>  </h5>
+                            <h5 th:text="${servicoAnalise.nomeDoEquipamento}"> </h5>
+                            <h5 th:text="${servicoAnalise.descricaoDoProblema}"> </h5>
+                       
+                            <h5><p th:text="'Data de requerimento: ' + ${#dates.format(servicoAnalise.dataDeEmissao, 'dd/MM/yyyy')}"></p><br> <p id="DataEntrega"></p></h5>
+                            
                         </div>
                         
                         <div class="imagem_analise">
-                            <img src="/images/celular_quebrado.png" class="img_celular" alt="">
+                            <img  th:src="${servicoAnalise.imagemBase64}"  alt="Imagem de visualização" class="img_celular" width="80%" height="60%">
                         </div>     
                     </div>
+                    <div class="info_analise" th:unless="${servicoAnalise != null}">
+                        <!-- Valor alternativo a ser exibido se servicoAndamento for nulo -->
+                        <div>
+                            <p style="font-size: 30px;">O objeto servicoAndamento é nulo.</p>
+                        </div>
+                    </div>
+
+
                 </div>
 
 
                     <div class="andamento">
                         <div class="titulo2">
                             <h1>Em Andamento</h1>
-                            <a href="serviços_andamento.html"><img src="/images/seta_direita.png" class="seta_direita" alt=""></a>
+                            <form action="Servicos_andamento" method="get">
+                            <button class="butaoCabecalho" ><img src="/images/seta_direita.png" class="seta_direita" alt=""></button>
+                            </form>
                         </div>
-    
-                        <div class="info_andamento">
+        
+                        <div class="info_analise" th:if="${servicoAndamento != null}">
                             <div class="textos_analise">
-                                <h5>Manutenção de NoteBook <br>Tela quebrada <br>Teclado não Funciona </h5>
-                                <h5>NoteBook Samsumg GME-NT24004</h5>
-                                <h5>Data do requerimento:24/01/2023 <br>Prazo Estimado de entrega: 10/02/2023</h5>
-                                <h5>  </h5>
+                                <h5 th:text="${servicoAndamento.nomeDoEquipamento}"> </h5>
+                                <h5 th:text="${servicoAndamento.descricaoDoProblema}"> </h5>
+                               
+                                <h5><p th:text="'Data de requerimento: ' + ${#dates.format(servicoAndamento.dataDeEmissao, 'dd/MM/yyyy')}"></p><br> <p id="DataEntregaAndamento"></p></h5>
+                                    
                             </div>
-                            
-                            <div class="imagem_andamento">
-                                <img src="/images/note_quebrado.webp" class="img_note" alt="">
-                            </div>
-                        
-                        
+                            <div class="imagem_analise">
+                                <img  th:src="${servicoAndamento.imagemBase64}"  alt="Imagem de visualização" class="img_celular" width="80%" height="60%">
+                            </div>     
                         </div>
+                        <div class="info_analise" th:unless="${servicoAndamento != null}">
+                            <!-- Valor alternativo a ser exibido se servicoAndamento for nulo -->
+                            <div>
+                                <p style="font-size: 30px;">O objeto servicoAndamento é nulo.</p>
+                            </div>
+                        </div>
+  
                     </div>
+                    
             </div>        
 
 
     </div>
 </body>
+
+
+<script th:inline="javascript">
+
+
+function adicionarDiasUteis(data, numeroDias) {
+    var novaData = new Date(data.getTime());
+
+    while (numeroDias > 0) {
+        novaData.setDate(novaData.getDate() + 1); // Adiciona um dia à data
+
+        // Verifique se o dia é um dia útil (não é sábado nem domingo)
+        if (novaData.getDay() !== 0 && novaData.getDay() !== 6) {
+            numeroDias--;
+        }
+    }
+
+    return novaData;
+}
+
+var servicoAnalise = /*[[${servicoAnalise}]]*/;
+var servicoAndamento = /*[[${servicoAndamento}]]*/;
+
+var dataDeEmissao = new Date(servicoAnalise.dataDeEmissao);
+var dataDeEmissaoAndamento = new Date(servicoAndamento.dataDeEmissao);
+
+// Adicione 5 dias úteis à data
+var dataComCincoDiasUteis = adicionarDiasUteis(dataDeEmissao, 5);
+var dataComCincoDiasUteisAndamento = adicionarDiasUteis(dataDeEmissaoAndamento, 5);
+
+// Formate a data em 'dd/MM/yyyy'
+var dia = dataComCincoDiasUteis.getDate();
+var mes = dataComCincoDiasUteis.getMonth() + 1;
+var ano = dataComCincoDiasUteis.getFullYear();
+
+var diaAndamento = dataComCincoDiasUteisAndamento.getDate();
+var mesAndamento = dataComCincoDiasUteisAndamento.getMonth() + 1;
+var anoAndamento = dataComCincoDiasUteisAndamento.getFullYear();
+
+var dataFormatada = `${dia}/${mes}/${ano}`;
+var dataFormatadaAndamento = `${diaAndamento}/${mesAndamento}/${anoAndamento}`;
+
+
+console.log('Data Formatada: ' + dataFormatada);
+
+var dataEntrega = document.getElementById("DataEntrega");
+dataEntrega.textContent = "Prazo Estimado de entrega: " + dataFormatada;
+
+var dataEntregaAndamento = document.getElementById("DataEntregaAndamento");
+DataEntregaAndamento.textContent = "Prazo Estimado de entrega: " + dataFormatadaAndamento;
+
+
+</script>
 </html>
 
 

@@ -10,16 +10,19 @@
 </head>
 <body>
     <div class="header" id="header">
-        <div class="logo_header">
-            <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
+        <div style="position: relative;" class="logo_header">
+            <a th:href="@{tela_inicial}" class="navigation_header"> <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave"></a>
         </div>
     
-            <div class="navigation_header">
-              <a th:href="@{Admin}" class="navigation_header">voltar</a>
-       
-        	  <a th:href="@{login}" class="navigation_header">Sair</a>
-            </div>
-    </div>
+        <div class="navigation_header" style="height: 100%;">
+            <form action="Admin" method="get" style="height: 100%;display: flex;align-items: center;">
+       	 	<button class="butaoCabecalho"> <a class="navigation_header">voltar</a> </button>
+        	</form>
+        	<form action="login" method="get" style="height: 100%;display: flex;align-items: center;">
+       		<button class="butaoCabecalho"><a class="navigation_header">Sair</a></button>
+       	 	</form>
+        </div>
+</div>
 
     <div class="container">
         <div class="titulo">
@@ -70,7 +73,7 @@
             </div>
 
                 <div class="div_botao">
-                    <button>Cadastrar</button>
+                    <button class="button">Cadastrar</button>
                 </div>
         </Form>     
     </div>

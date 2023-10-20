@@ -5,52 +5,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Especificação - Aprovado</title>
-    <link href="styles/especificaçoes_aprovado.css" rel="stylesheet" />
+    <link href="/styles/especificaçoes_aprovado.css" rel="stylesheet" />
 </head>
 <body>
-<div class="header" id="header">
-    <div class="logo_header">
-        <img src="images/brain.png" class="img_brain" alt="Logo BrainWave">
-    </div>
-
-        <div class="navigation_header">
-            <a href="serviços_previa.html">Usúario</a>
-            <!--<a href="#">Notificações</a>-->
-            <a href="login.html">Sair</a>
+    <div class="header" id="header">
+        <div style="position: relative;" class="logo_header">
+            <a th:href="@{tela_inicial}" class="navigation_header"> <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave"></a>
+        </div>
+    
+        <div class="navigation_header" style="height: 100%;">
+            <form action="Servicos_andamento" method="get" style="height: 100%;display: flex;align-items: center;">
+       	 	<button class="butaoCabecalho"> <a class="navigation_header">voltar</a> </button>
+        	</form>
+        	<form action="login" method="get" style="height: 100%;display: flex;align-items: center;">
+       		<button class="butaoCabecalho"><a class="navigation_header">Sair</a></button>
+       	 	</form>
         </div>
 </div>
 
 <div class="container">
     <div class="usuario">
-        <img src="images/usuario.png" class="icon_user" alt="">
+        <img src="/images/usuario.png" class="icon_user" alt="">
         <h3>Juninho</h3>
         <h5>Técnico de Manutenção</h5>   
     </div>
     
     <div class="especificação">
-        <h1>Especificação - Aprovado</h1>
+        <h1>Especificação - Em Andamento</h1>
         <div class="manutenção" id="manutenção">
             <div class="informacoes">
-                <h5><strong>Manutenção de Celular</strong></h5>
-                <h5>Tela quebrada <br> Não carrega</h5>
-                <h5>Aparelho: Xiaomi mi7</h5>
-                <h5>Data do Requerimento: <br> 01/03/2023</h5>
-                <h5>Prazo de entrega estimado: <br> 10/03/2023</h5>
+                <h5><strong>Manutenção</strong></h5>
+                <h5 th:text="${Service.nomeDoEquipamento}"></h5>
+                <h5 th:text="${Service.descricaoDoProblema}"></h5>
+                <h5 th:text="'Data de requerimento: ' + ${#dates.format(Service.dataDeEmissao, 'dd/MM/yyyy')}"></h5>
+                <h5 id="DataEntrega"></h5>
                 <h5>Inf. Para contato com cliente: <br> email: user12345@gmail.com <br> 11-99123-1234</h5>
-
+                <div class="botao_chat">
+                    <img src="/images/btn_aceitar.png" class=".botoes" />
+                </div>
             </div>
 
 
-                <div class="imagens">
-                    <div class="img_celular">
-                        <img src="images/celular_quebrado.png" class="celular_quebrado" alt="celular_quebrado">
-                    </div>
+            <div class="imagens">
+                 <div class="img_celular">
+                    <form th:action="@{/api/v1/ServicoInfAndamento}"  th:object="${servico}" method="post" >  
+
+                        <input type="number" id="id" name="id" th:field="*{id}"    placeholder="Nome de usuário"  style="display: none;" required>
+
+                        <input type="number" id="editEstadoServico" name="estadoServico" th:field="*{estadoServico}"    placeholder="Nome de usuário"  style="display: none;" required>
+
+                        <button class="botaoAbrirMenu"  > <img th:src="${Service.imagemBase64}" class="celular_quebrado" alt="celular_quebrado" width="100%" height="100%"></button>
                     
-                    <div class="botao_chat">
-                        <a href="orçamento.html"><img src="images/sifrao_img.png" class="sifrao_btn" /></a>
-                        <a href=""><img src="images/chat.png" class="chat_btn" /></a>
-                    </div>
-                </div>
+                    </form>    
+                </div>    
+            </div>
         </div>
     </div>
 
@@ -60,4 +68,48 @@
     <script src="scripts/especificações_analise.js"></script>
 
 </body>
+<script th:inline="javascript">
+
+    
+    
+        function adicionarDiasUteis(data, numeroDias) {
+            var novaData = new Date(data.getTime());
+        
+            while (numeroDias > 0) {
+                novaData.setDate(novaData.getDate() + 1); // Adiciona um dia à data
+        
+                // Verifique se o dia é um dia útil (não é sábado nem domingo)
+                if (novaData.getDay() !== 0 && novaData.getDay() !== 6) {
+                    numeroDias--;
+                }
+            }
+        
+            return novaData;
+        }
+    
+        function redezinhaInformacoes(){
+ 
+        var servicoAnalise = /*[[${Service}]]*/;
+        
+        var dataDeEmissao = new Date(servicoAnalise.dataDeEmissao);
+        
+        // Adicione 5 dias úteis à data
+        var dataComCincoDiasUteis = adicionarDiasUteis(dataDeEmissao, 5);
+        
+        // Formate a data em 'dd/MM/yyyy'
+        var dia = dataComCincoDiasUteis.getDate();
+        var mes = dataComCincoDiasUteis.getMonth() + 1;
+        var ano = dataComCincoDiasUteis.getFullYear();
+        
+        var dataFormatada = `${dia}/${mes}/${ano}`;
+        
+        console.log('Data Formatada: ' + dataFormatada);
+        
+        var dataEntrega = document.getElementById("DataEntrega");
+        dataEntrega.textContent = "Prazo Estimado de entrega: " + dataFormatada;
+      
+        }
+        redezinhaInformacoes()
+        
+        </script>
 </html>

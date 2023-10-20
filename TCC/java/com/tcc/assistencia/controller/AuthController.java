@@ -55,13 +55,12 @@ public class AuthController {
 	
 	//Mapeamento tela inicial 
 	@GetMapping("tela_inicial")
-	public String telaInicial( HttpSession session, Model model) {
+	public String telaInicial(Funcionario funcionario, HttpSession session, Model model) {
 		// Verifica se o usuário está autenticado
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser == null) {
-			
+		Optional<Funcionario> funcionarioVerificacao = authService.authenticate(funcionario.getEmail(), funcionario.getSenha());
+		 if (!funcionarioVerificacao.isPresent()) {
 	            // Se o usuário não estiver autenticado, redireciona para a página de login
-	            return "redirect:login";
+	            return "redirect:/login";
 	      }
        
         	return "tela_inicial";
@@ -79,9 +78,6 @@ public class AuthController {
 	     String senha = funcionario.getSenha().trim();
 	     
 	     Optional<Funcionario> authenticatedUser = authService.authenticate(email, senha);
-	  
-	     session.setAttribute("funcionario",mFuncionarioService.buscaFuncionarioPorEmail(email)); // Armazena as informações do funcionário na sessão.
-
 
 	        if (authenticatedUser.isPresent()) {
 	            // O usuário está autenticado, inicie a sessão e defina o atributo de sessão "authenticatedUser"
@@ -89,7 +85,7 @@ public class AuthController {
 	            return "redirect:tela_inicial"; // Redireciona para a página do painel de controle
 	        } else {
 	            model.addAttribute("error", "Credenciais inválidas");
-	            return "redirect:login"; // Redireciona de volta para a página de login com uma mensagem de erro
+	            return "login"; // Redireciona de volta para a página de login com uma mensagem de erro
 	        }
 	    	 
 		
@@ -125,10 +121,10 @@ public class AuthController {
 	    
 	}
 	*/
-    @GetMapping("logout")
+    @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:login";
+        return "redirect:/login";
     }
 	
 	/*

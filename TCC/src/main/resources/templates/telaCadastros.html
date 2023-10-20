@@ -10,20 +10,19 @@
 </head>
 <body>
     <div class="header" id="header">
-        <div style="top: 4px;position: relative;" class="logo_header">
-            <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
+        <div style="position: relative;" class="logo_header">
+            <a th:href="@{tela_inicial}" class="navigation_header"> <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave"></a>
         </div>
-
-            <div class="navigation_header">
-            
-        	
-       		<a th:href="@{tela_inicial}" class="navigation_header">voltar</a>
-            
-       		<a th:href="@{login}" class="navigation_header">Sair</a>
-       	 	
-            </div>
-
-    </div>
+    
+        <div class="navigation_header" style="height: 100%;">
+            <form action="tela_inicial" method="get" style="height: 100%;display: flex;align-items: center;">
+       	 	<button class="butaoCabecalho"> <a class="navigation_header">voltar</a> </button>
+        	</form>
+        	<form action="login" method="get" style="height: 100%;display: flex;align-items: center;">
+       		<button class="butaoCabecalho"><a class="navigation_header">Sair</a></button>
+       	 	</form>
+        </div>
+</div>
 
         <div class="container">
             <h1 style="text-align: center;">Cadastros</h1>
@@ -36,7 +35,7 @@
                 <input type="text" name="parametro" style="display: none;" th:value="${2}" />
                 <button class="btn_1"><img src="/images/funcionariosof.png" alt=""></button>
                 </form>
-                <form action="Admin" method="get">
+                <form action="ControleServico" method="get">
                 <input type="text" name="parametro" style="display: none;" th:value="${3}" />
                 <button class="btn_1"><img src="/images/servico-de-gestao.png" alt=""></button>
                 </form>

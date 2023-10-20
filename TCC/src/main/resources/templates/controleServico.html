@@ -15,16 +15,19 @@
 </head>
 <body>
     <div class="header" id="header">
-        <div class="logo_header">
-            <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
+        <div style="position: relative;" class="logo_header">
+            <a th:href="@{tela_inicial}" class="navigation_header"> <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave"></a>
         </div>
     
-            <div class="navigation_header">
-              <a th:href="@{telaCadastros}" class="navigation_header">voltar</a>
-       
-        	  <a th:href="@{login}" class="navigation_header">Sair</a>
-            </div>
-    </div>
+        <div class="navigation_header" style="height: 100%;">
+            <form action="telaCadastros" method="get" style="height: 100%;display: flex;align-items: center;">
+       	 	<button class="butaoCabecalho"> <a class="navigation_header">voltar</a> </button>
+        	</form>
+        	<form action="login" method="get" style="height: 100%;display: flex;align-items: center;">
+       		<button class="butaoCabecalho"><a class="navigation_header">Sair</a></button>
+       	 	</form>
+        </div>
+</div>
     <div class="container">
 
         <!-- Página de Lista de Clientes (lista-clientes.html) -->
@@ -36,44 +39,45 @@
             <input type="text" id="campoDeTexto" class="campo-de-texto" placeholder="Pesquisar...">
             
         </div>
-        <a style="color: black;display: flex;align-items: center;border: none;text-decoration: none" th:href="@{CadastroCliente}">
+        <a style="color: black;display: flex;align-items: center;border: none;text-decoration: none" th:href="@{CadastroServico}">
             <i class="fas fa-user-plus" style="font-size: 80px;"></i>
         </a>
        
 
         </div>
     </div>
-    <p th:text="${texto}"></p>
+ 
     <div class="principal">
         <div class="divTable">        
             <table id="tabelaClientes">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Email</th>  
-                        <th>CPF</th>
+                        <th>Dispositivo</th>
+                        <th>Descrição</th>  
+                        <th>Funcionario </th>
                         <th>Editar/Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="cliente : ${clientes}">
-                        <td th:text="${cliente.nome}" ></td>
-                        <td th:text="${cliente.email}" ></td>
-                        <td th:text="${cliente.cpf}" ></td>
+                    <tr th:each="servico : ${servicos}">
+                        <td th:text="${servico.nomeDoEquipamento}" ></td>
+                        <td th:text="${servico.descricaoDoProblema}" ></td>
+                        <td th:text="${servico.nomeDoFuncionario}" ></td>
                         <td class="btnEdEx">
 
                                 <!-- Símbolo de Edição (Lápis) -->
-                           
-                                <button class="botaoAbrirMenu" th:id="${cliente.id}" >
-                                    <i class="fas fa-pencil-alt tamIcone"></i>
-                                </button>
+                            <button class="botaoAbrirMenu" th:id="${servico.id}" >
+                                <i class="fas fa-pencil-alt tamIcone"></i>
+                            </button>
                                 
                                 
                             
-                            <form th:action="@{/api/v1/Admin/{id}(id=${cliente.id})}"  method="post">    
+                            <form th:action="@{/api/v1/controleServico/{id}(id=${servico.id})}"  method="post">    
                                 <button  type="submit" class="estiloBotao">
                                 <i class="fas fa-times tamIcone"></i>
                                 </button>
+                            </form> 
+                               
                             </form>    
                         </td>
                     </tr>
@@ -83,60 +87,94 @@
         
 <!-- Botão para abrir o modal -->
 <div id="myModal" class="modal">
-    <div class="modal-content">
+    <div class="modal-content" id="modalEdit">
         <span class="close-button" id="closeModalButton">&times;</span>
-        <div class="modal-title">Perfil do Usuario</div>
-        <form th:action="@{/api/v1/Admin}"  th:object="${cliente}" method="post">  
+        <div  class="modal-title"><p id="textEstado">   </p> </div>
+        <form th:action="@{/api/v1/ControleServico}"  th:object="${servicoForm}" method="post" enctype="multipart/form-data">  
             <div class="input-area">
                     <div class="credenciais">
                         <div class="lado1">
-                            <input style="display: none;" id="editId"  th:field="*{id}" type="hidden" />
+                            
+                            <input type="number" id="id" name="id" th:field="*{id}" placeholder="Nome de usuário" style="display: none;" required>
 
-                            <p class="textUpadte">Nome: </p>
-                            <input type="text" id="editNome" name="nome" th:field="*{nome}"  placeholder="Nome de usuário" class="campoDeFormulario" required><br>
-                    
-                            <p class="textUpadte">Email: </p>
-                            <input type="text" id="editEmail" th:field="*{email}" placeholder="E-mail/Nome de usuário" class="campoDeFormulario" required ><br>
+                            <p class="textUpadte">Nome do equipamento: </p>
+                            <input type="text" id="editNomeDoEquipamento" name="nomeDoEquipamento" th:field="*{nomeDoEquipamento}"  placeholder="Nome de usuário" class="campoDeFormulario" required><br>
                             
-                            <p class="textUpadte">DataDeNasc: </p>
-                            <input type="Date" id="editDataDeNasc" name="dataDeNasc" th:field="*{dataDeNasc}" placeholder="DataDeNasc" class="campoDeFormulario" required><br>
+                            <p class="textUpadte">Data de Emissão: </p>
+                            <input type="date" id="editDataDeEmissao" name="dataDeEmissao" th:field="*{dataDeEmissao}"  placeholder="Nome de usuário" class="campoDeFormulario" required><br>
                             
-                            <p class="textUpadte">CPF: </p>    
-                            <input type="text" id="editCpf"  th:field="*{cpf}" placeholder="cpf" class="campoDeFormulario" required><br>
+                            <p id="textFinalizacao" class="textUpadte">Data de Finalizacão: </p>
+                            <input type="date" id="editdataDeFinalizacao" name="dataDeFinalizacao" th:field="*{dataDeFinalizacao}"  placeholder="Nome de usuário" class="campoDeFormulario" ><br class="estado2">
+                            
+                           
+                            <input type="number" id="editEstadoServico" name="estadoServico" th:field="*{estadoServico}" placeholder="Nome de usuário" style="display: none;" required>
+
+                 
                         
-                            <p class="textUpadte">Senha: </p>
-                            <input type="text" id="editSenha"  th:field="*{senha}" placeholder="Senha" class="campoDeFormulario" required ><br>
+                        </div> 
                         
-                        </div>
-        
                         <div class="lado2">
-        
-                            <p class="textUpadte">Cep: </p>
-                            <input type="text" id="editCep" th:field="*{Cep}" placeholder="Cidade" class="campoDeFormulario" required><br>
-
-                            <p class="textUpadte">Cidade: </p> 
-                            <input type="text" id="editCidade" th:field="*{Cidade}" placeholder="Bairro" class="campoDeFormulario" required><br>
-
-                            <p class="textUpadte">Bairro: </p>         
-                            <input type="text" id="editBairro" th:field="*{Bairro}" placeholder="Endereço" class="campoDeFormulario" required><br>
-
-                            <p class="textUpadte">Logradouro: </p>   
-                            <input type="text" id="editLogradouro" th:field="*{logradouro}" placeholder="complemento" class="campoDeFormulario" required><br>
                             
-                            <p class="textUpadte">Complemento: </p>   
-                            <input type="text" id="editComplemento" th:field="*{complemento}" placeholder="complemento" class="campoDeFormulario" required><br>
-                                                
-                    </div>
-                </div>
-            </div>
-            <div class="input-area">
-            
-                <select id="editEstado" name="estado"  th:field="*{uF}" placeholder="Estado" class="campoDeFormulario" style="width: 21vw;" required>
+                           
+                            <p id="textValue" class="textUpadte">Valor do servico: </p>
+                            <input type="text" id="editValorDoServico" name="valorDoServico"  th:field="*{valorDoServico}"  class="campoDeFormulario" ><br class="estado2">
+
+                            <p class="textUpadte">Funcionario: </p>
+                            <select id="editFuncionarioId" name="funcionarioId" th:field="*{funcionarioId}"  class="campoDeFormulario" style="width: 17.25vw;
+                            height: 52px;
+                            border: 1px solid #ccc;
+                            border-radius: 5px;">
+                                <option value="">Selecione um funcionário</option>
+                                <option th:each="funcionario : ${funcionarios}" th:value="${funcionario.id}" th:text="${funcionario.nome}"></option>
+                              </select><br>
+                              
+
+
+                              <p class="textUpadte">Cliente: </p>
+                              <select id="editClienteId" name="clienteId" th:field="*{clienteId}"  class="campoDeFormulario" style="width: 17.25vw;
+                              height: 52px;
+                              border: 1px solid #ccc;
+                              border-radius: 5px;
+                          ">
+                           
+                                  <option value="">Selecione um Cliente</option>
+                                  <option th:each="Cliente : ${clientes}" th:value="${Cliente.id}" th:text="${Cliente.nome}"></option>
+                              </select><br>
                         
-                    <option  value="">Estado</option>  
-                    
-                </select><br>    
-            
+
+                    </div>
+                
+                
+                </div>
+                    <div class="credenciais" style="display: flex;
+                    justify-content: space-between;">
+                        <div style="width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                        margin-left: 5%;">
+                        <p class="textUpadte">Descricão do Problema: </p>
+                        <textarea id="editDescricaoDoProblema" name="DescricaoDoProblema" th:field="*{descricaoDoProblema}" placeholder="Descrição" class="alinhaDescricao campoDeFormulario" required rows="6" cols="75" style="height: 180px;
+                        width: 13vw;" ></textarea>
+                        <p class="textUpadte" id="textDescricao" style="display: none;">Descricão do Concerto: </p>
+                         <textarea id="editDescricaoDoConcerto" name="editDescricaoDoConcerto" th:field="*{descricaoDaTroca}" placeholder="Descrição" class="alinhaDescricao campoDeFormulario" required rows="6" cols="75" style="height: 180px;
+                        width: 13vw;display: none;"  ></textarea>
+                        </div>
+
+                        <div class="file-upload"  id="AreaImg" style="display: none;width: 50%;text-align:left">
+                            <label for="imagem" class="file-label">
+                                <span style="width: 300px;height: 30px">Arraste a imagem ou clique aqui</span>
+                            </label>
+                            <input type="file" id="imagem" name="imagem" th:field="*{imagem}" accept="image/*" onchange="showFileName(this)" class="file-input" style="width: 17vw;
+                            height: 190px;">
+                          
+                        </div>
+
+                        <div id="preview" style="width: 50%;display: flex;
+                        align-items: center;">
+                            <img id="preview-image" th:src="*{imagem}" alt="Imagem de visualização" style="margin-right: 10%;" width="300" height="200">
+                            <div id="remover-imagem" class="remove-symbol" >X</div>
+                        </div>
+                    </div>
             </div>
             <div class="button-area">
                 <button id="cancelButton" type="button">Cancelar</button>
@@ -147,160 +185,260 @@
 </div>
 
 <script th:inline="javascript">
-    $(document).ready(function() {
-    // Quando um caractere é digitado no campo de texto
-    $("#campoDeTexto").on("input", function() {
-        // Obtém o valor digitado
-        var texto = $("#campoDeTexto").val();
 
-        // Faz a requisição AJAX para o servidor
-        $.ajax({
-            url: "/api/v1/Admin", // URL do endpoint no seu servidor
-            type: "GET", // ou "POST", dependendo da sua configuração
-            data: { texto: texto }, // Dados que você deseja enviar para o servidor
-            success: function(result) {
-                // Limpe o conteúdo atual da tabela
-                
-                $("#tabelaClientes tbody").empty();
-                
-                var clientes = /*[[${clientes}]]*/ []; // Isso insere o valor da variável Thymeleaf "clientes" no JavaScripts   
-                // Itere sobre os resultados e adicione-os à tabela
-                $.each(clientes, function(index, clientes) {
-                    var newRow = "<tr>";
-                    newRow += "<td>" + clientes.nome + "</td>";
-                    newRow += "<td>" + clientes.email + "</td>";
-                    newRow += "<td>" + clientes.cpf + "</td>";
-                    newRow += "<td class='btnEdEx'>";
-                    newRow += "<form th:action='@{/api/v1/tela_inicial}' method='get'>";
-                    newRow += "<button type='submit' class='botaoAbrirMenu'>";
-                    newRow += "<i class='fas fa-pencil-alt tamIcone'></i>";
-                    newRow += "</button>";
-                    newRow += "</form>";
-                    newRow += "<form th:action='@{/api/v1/Admin/{id}(id=${cliente.id})}' method='post'>";
-                    newRow += "<button type='submit' class='botaoAbrirMenu'>";
-                    newRow += "<i class='fas fa-times tamIcone'></i>";
-                    newRow += "</button>";
-                    newRow += "</form>";
-                    newRow += "</td>";
-                    newRow += "</tr>";
-                    $("#tabelaClientes tbody").append(newRow);
-                });
+function estado(servicoEstado){
 
-                // Manipule a resposta do servidor aqui
-                console.log("Resposta do servidor:", clientes);
-            },
-            error: function(error) {
-                // Lida com erros de requisição aqui
-                console.error("Erro na requisição:", error);
-            }
-        });
-    });
-});
+var estadoServico = document.getElementById("estadoServico");
+var nomeDoEquipamento = document.getElementById("editNomeDoEquipamento")
+var valorDoServico = document.getElementById("editValorDoServico")
+var dataDeEmissao = document.getElementById("editDataDeEmissao")
+var dataDeFinalizacao = document.getElementById("editdataDeFinalizacao")
+var estadoServico = document.getElementById("editEstadoServico")
+var funcionarioId = document.getElementById("editFuncionarioId")
+var descricaoDoProblema = document.getElementById("editDescricaoDoProblema")
+var textFinalizacao = document.getElementById("textFinalizacao")
+var textValue = document.getElementById("textValue")
+var estado2 = document.getElementsByClassName("estado2")
+var textEstado = document.getElementById("textEstado")
+var modalPosition = document.getElementById("modalEdit")
+var AreaImgPosition = document.getElementById("AreaImg")
+var textDescricao = document.getElementById("textDescricao")
+var editDescricaoDoConcerto = document.getElementById("editDescricaoDoConcerto")
+
+if(servicoEstado == 1){
+
+    valorDoServico.style.display = "none";
+    dataDeFinalizacao.style.display = "none";
+    textFinalizacao.style.display = "none";
+    textValue.style.display = "none";
+    textEstado.textContent = "Estado do Serviço: Analise"
+    AreaImgPosition.style.display = "none";
+    modalPosition.style.top = "14%";
+    textDescricao.style.display = "none";
+    editDescricaoDoConcerto.style.display = "none";
+    for (var i = 0; i < estado2.length; i++) {
+        estado2[i].style.display = "none";
+    }   
+    dataDeFinalizacao.disabled = true;
+    valorDoServico.disabled = true; 
+    
+}else if(servicoEstado == 2){
+    textEstado.textContent = "Estado do Serviço:  Esperando Pagamento"
+
+    valorDoServico.style.display = "block";
+    dataDeFinalizacao.style.display = "block";
+    textFinalizacao.style.display = "block";
+    textValue.style.display = "block";
+    modalPosition.style.top = "2%";
+    textDescricao.style.display = "block";
+    editDescricaoDoConcerto.style.display = "block";
+    
+    AreaImgPosition.style.flexDirection = "column";
+    AreaImgPosition.style.justifyContent = "center";
+
+    for (var i = 0; i < estado2.length; i++) {
+        estado2[i].style.display = "block";
+    }   
+    dataDeFinalizacao.disabled = false;
+    valorDoServico.disabled = false; 
+
+}else if(servicoEstado == 3){
+    textEstado.textContent = "Estado do Serviço: Em andamento"
+
+    valorDoServico.style.display = "block";
+    dataDeFinalizacao.style.display = "block";
+    textFinalizacao.style.display = "block";
+    textValue.style.display = "block";
+    modalPosition.style.top = "2%";
+    textDescricao.style.display = "block";
+    editDescricaoDoConcerto.style.display = "block";
+    
+    AreaImgPosition.style.flexDirection = "column";
+    AreaImgPosition.style.justifyContent = "center";
+    for (var i = 0; i < estado2.length; i++) {
+        estado2[i].style.display = "block";
+    }   
+    dataDeFinalizacao.disabled = false;
+    valorDoServico.disabled = false; 
+
+
+}else if(servicoEstado == 4){
+    textEstado.textContent = "Estado do Serviço: Finalizado"
+
+    valorDoServico.style.display = "block";
+    dataDeFinalizacao.style.display = "block";
+    textFinalizacao.style.display = "block";
+    textValue.style.display = "block";
+    modalPosition.style.top = "2%";
+    textDescricao.style.display = "block";
+    editDescricaoDoConcerto.style.display = "block";
+  
+    AreaImgPosition.style.flexDirection = "column";
+    AreaImgPosition.style.justifyContent = "center";
+    for (var i = 0; i < estado2.length; i++) {
+        estado2[i].style.display = "block";
+    }   
+    dataDeFinalizacao.disabled = false;
+    valorDoServico.disabled = false; 
+
+
+}
+}
+
 
 // Função para abrir o modal
 var openModalButtons = document.querySelectorAll(".botaoAbrirMenu");
 var modal = document.getElementById("myModal");
-
-const estados = [
-	        "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", 
-	        "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", 
-	        "RS", "RO", "RR", "SC", "SP", "SE", "TO"
-	    ];
-
-        const selectEstado = document.getElementById("editEstado");
-        
-        estados.forEach(sigla => {
-            const option = document.createElement("option");
-            option.value = sigla;
-            option.text = sigla;
-            selectEstado.appendChild(option);
-});
 
 
 
 openModalButtons.forEach(function(button) {
     button.onclick = function() {
     
-    var clientes = /*[[${clientes}]]*/[];
-    var idCliente = button.getAttribute("id")  
+    var servicos = /*[[${servicos}]]*/[];
+    var idServico = button.getAttribute("id")  
 
-    var editId = document.getElementById("editId")
-    var editNome = document.getElementById("editNome");
-    var editEmail = document.getElementById("editEmail");
-    var editDataDeNasc = document.getElementById("editDataDeNasc");
-    var editCpf = document.getElementById("editCpf");
-    var editSenha = document.getElementById("editSenha");
-    var editEstado = document.getElementById("editEstado");
-    var editCep = document.getElementById("editCep");
-    var editCidade = document.getElementById("editCidade");
-    var editBairro = document.getElementById("editBairro");
-    var editLogradouro = document.getElementById("editLogradouro");
-    var editComplemento = document.getElementById("editComplemento");
-    
-    
+    var editNomeDoEquipamento = document.getElementById("editNomeDoEquipamento")
+    var editValorDoServico = document.getElementById("editValorDoServico")
+    var editDataDeEmissao = document.getElementById("editDataDeEmissao")
+    var editDataDeFinalizacao = document.getElementById("editdataDeFinalizacao")
+    var editEstadoServico = document.getElementById("editEstadoServico")
+    var editFuncionarioId = document.getElementById("editFuncionarioId")
+    var editDescricaoDoProblema = document.getElementById("editDescricaoDoProblema")
+    var editClienteId = document.getElementById("editClienteId")
+    var editimagem = document.getElementById("preview-image")
+    var editId = document.getElementById("id")
+    var editDescricaoDoConcerto = document.getElementById("editDescricaoDoConcerto")
+    // var editDescricaoDoProblema = document.getElementById("descricaoDoProblema");
+ 
+    var estadoFinalServico = null;
 
     // Supondo que 'clientes' seja um array de objetos de cliente
-        for (var i = 0; i < clientes.length; i++) {
-            var cliente = clientes[i];
-            console.log(idCliente);
+        for (var i = 0; i < servicos.length; i++) {
+            var servico = servicos[i];
+            console.log(idServico);
 
-            var formatDateCliente = new Date(cliente.dataDeNasc);
-
+            var formatDatedeEmisao = new Date(servico.dataDeEmissao);
+            var formatDatedeFinalização = new Date(servico.dataDeFinalizacao);
             // Aqui, 'cliente' é um objeto que representa um cliente individual
             // Você pode acessar as propriedades do cliente, por exemplo:
-            var id =cliente.id
-            var nome = cliente.nome;
-            var email = cliente.email;
-            var cpf = cliente.cpf;
-            var DataDeNasc = formatDateCliente.toISOString().split('T')[0];
-            var senha = cliente.senha;
-            var complemento = cliente.complemento;
-            var cep = cliente.cep;
-            var cidade = cliente.cidade;
-            var bairro = cliente.bairro;
-            var logradouro = cliente.logradouro;
-            var estado = cliente.uF;
+            var id = servico.id;
+            var nomeDoEquipamento = servico.nomeDoEquipamento;
+            var valorDoServico  = servico.valorDoServico;
+            var dataDeEmissao = formatDatedeEmisao.toISOString().split('T')[0];
+            var dataDeFinalizacao = formatDatedeFinalização.toISOString().split('T')[0];
+            var estadoServico = servico.estadoServico;
+            var funcionarioId = servico.funcionarioId;
+            var ClienteId = servico.clienteId;
+            var descricaoDoProblema = servico.descricaoDoProblema;
+            var descricaoDaTroca = servico.descricaoDaTroca;
+            var base64imagem = servico.imagem;
+            var imagem = "data:image/png;base64," + base64imagem; // Construir o URL da imagem
 
-            if(idCliente == cliente.id){
-                editId.value = id;
-                editNome.value = nome;
-                editEmail.value = email;
-                editDataDeNasc.value = DataDeNasc;
-                editCpf.value = cpf;
-                editSenha.value = senha;
-                editComplemento.value = complemento;
-                editCep.value = cep;
-                editCidade.value = cidade;
-                editBairro.value = bairro;
-                editLogradouro.value = logradouro;
-               for (var i = 0; i < editEstado.options.length; i++) {
-                    if (editEstado.options[i].value == estado) {
-                        editEstado.options[i].selected = true;
-                        break; // Saia do loop após encontrar a opção desejada
-                    }
-                }  
+            console.log(id);
+            // Decodifique a string Base64 para obter os bytes
+            // Remova o "0x" da sequência hexadecimal
+            
+
+            if(idServico == servico.id){
+                editId.value = servico.id;
+                editNomeDoEquipamento.value = nomeDoEquipamento;
+                editValorDoServico.value = valorDoServico;
+                editDataDeEmissao.value = dataDeEmissao;
+                editDataDeFinalizacao.value = dataDeFinalizacao;
+                editimagem.src = imagem;
+                editEstadoServico.value = estadoServico;
+                editFuncionarioId.value = funcionarioId;
+                editClienteId.value = ClienteId;
+                editDescricaoDoProblema.value = descricaoDoProblema;
+                if(descricaoDaTroca != null){
+                editDescricaoDoConcerto.value = descricaoDaTroca;
+                }
+                estadoFinalServico =estadoServico;
+                //editDescricaoDoProblema.value = descricaoDoProblema;
+        
                 
                 
             }
             // Faça o que você precisa com os dados do cliente dentro do loop
-            console.log(`Nome: ${nome}, Email: ${email}, CPF: ${cpf}`);
+            //console.log(`Nome: ${nome}, Email: ${email}, CPF: ${cpf}`);
            
-            console.log(cliente);
-            console.log(cliente.uF);
-            console.log(DataDeNasc);
-            console.log(cliente.dataDeNasc);
+            //console.log(cliente);
+            //console.log(cliente.uF);
+            //console.log(DataDeNasc);
+            //console.log(cliente.dataDeNasc);
 
-          
+            
             
         }
     // Faça uma solicitação AJAX para buscar informações do cliente com o ID
-    
+    estado(estadoFinalServico);
     modal.style.display = "block";
+    console.log(ClienteId)   
     console.log("a")    
+
+    
     }
+
+    
 });
 
 
+function showFileName(input) {
+    const label = document.querySelector('label[for="Imagem"]');
+    const previewImage = document.getElementById('preview-image');
+    const AreaInseriImage = document.getElementById('AreaImg')
+    const ApagarImagem = document.getElementById('remover-imagem')
+    const inputImagem = document.getElementById('imagem');
+    const preview = document.getElementById("preview");
+    
+    console.log(inputImagem.value);
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+           
+            previewImage.style.display = 'flex';
+            ApagarImagem.style.display = 'block';
+            AreaInseriImage.style.display = 'none';
+            preview.style.display = 'flex';
+            
+        };
+
+        reader.readAsDataURL(input.files[0]);
+        
+       
+    } else {
+        label.textContent = 'Arraste uma imagem ou clique aqui para fazer upload';
+        previewImage.style.display = 'none';
+
+    }
+
+   
+}
+
+// Função para remover a imagem e redefinir o input de arquivo
+function removerImagem() {
+    const previewImage = document.getElementById('preview-image');
+    const AreaInseriImage = document.getElementById('AreaImg');
+    const inputImagem = document.getElementById('imagem');
+    const ApagarImagem = document.getElementById('remover-imagem')
+    const preview = document.getElementById("preview")
+
+    previewImage.src = '';
+    previewImage.style.display = 'none';
+    AreaInseriImage.style.display = 'flex';
+    ApagarImagem.style.display = 'none';
+    preview.style.display = 'none';
+    inputImagem.value = ''; // Limpar o valor do input de arquivo
+}
+
+
+// Associar a função ao botão de remoção
+document.getElementById('remover-imagem').addEventListener('click', removerImagem);
+const Imagem = document.getElementById('imagem');
 
 
      // Função para fechar o modal
@@ -328,6 +466,8 @@ modal.addEventListener("click", function(event) {
         modal.style.display = "none";
     }
 });
+
+
 </script>
     
 </body>

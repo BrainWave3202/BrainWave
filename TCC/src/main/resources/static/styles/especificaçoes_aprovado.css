@@ -112,11 +112,11 @@ body{
 .informacoes{
     width: 50%;
     height: 100%;
-   
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     margin-left: 10px;
+    align-items: flex-start;
 }
 
 .imagens{

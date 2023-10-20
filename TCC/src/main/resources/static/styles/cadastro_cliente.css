@@ -138,7 +138,7 @@ input::placeholder{
     align-items: center;
 }
 
-button{
+.button{
     width: 250px;
     height: 60px;
     border-radius: 40px;
@@ -151,7 +151,7 @@ button{
     cursor: pointer;
 }
 
-button:hover{
+.button:hover{
     background-color: #048ABF;
     color: #8DD5F2;
 }
@@ -167,4 +167,95 @@ button:hover{
     outline: 0;
 }
 
+.file-upload {
+    position: relative;
+    overflow: hidden;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 100px 60px 100px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px dashed #aaa;
+    transition: background-color 0.3s ease;
+}
+
+.file-label:hover {
+    background-color: #ddd;
+}
+
+
+.file-preview {
+    width: 100px;
+    height: 100px;
+    background-color: #f0f0f0;
+    border: 1px solid #aaa;
+    overflow: hidden;
+}
+
+
+
+.alinhaDescricao{
+ 
+    width: 500px;
+    height: 150px;
+    padding: 0px;
+
+}
+
+.upload-area {
+    text-align: center;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    cursor: pointer;
+}
+
+#preview {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+#preview img {
+    max-width: 100%;
+    max-height: 200px;
+}
+
+.remove-symbol {
+    color: red; /* Define a cor vermelha */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    font-size: 50px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+.remove-symbol:hover {
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+.butaoCabecalho{
+    background:none;
+    border:0px;
+    cursor: pointer;
+    text-align: center;
+  
+}

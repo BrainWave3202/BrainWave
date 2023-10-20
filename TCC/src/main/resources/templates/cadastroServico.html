@@ -10,100 +10,155 @@
 </head>
 <body>
     <div class="header" id="header">
-        <div class="logo_header">
-            <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
+        <div style="position: relative;" class="logo_header">
+            <a th:href="@{tela_inicial}" class="navigation_header"> <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave"></a>
         </div>
     
-            <div class="navigation_header">
-              <a th:href="@{controleFuncionario}" class="navigation_header">voltar</a>
-       
-        	  <a th:href="@{login}" class="navigation_header">Sair</a>
-            </div>
-    </div>
+        <div class="navigation_header" style="height: 100%;">
+            <form action="Servicos_previa" method="get" style="height: 100%;display: flex;align-items: center;">
+       	 	<button class="butaoCabecalho"> <a class="navigation_header">voltar</a> </button>
+        	</form>
+        	<form action="login" method="get" style="height: 100%;display: flex;align-items: center;">
+       		<button class="butaoCabecalho"><a class="navigation_header">Sair</a></button>
+       	 	</form>
+        </div>
+</div>
 
-    <div class="container" style="    display: flex;
+    <div class="container" style="display: flex;
     flex-direction: column;">
         <div class="titulo">
             <h1 class="txt1">Cadastro</h1>
-            <h1 class="txt2">funcionario</h1>
+            <h1 class="txt2">Servico</h1>
         </div>
 		
-		<Form th:action="@{/api/v1/CadastroFuncionario}"  th:object="${funcionario}" method="post">
+		<form th:action="@{/api/v1/CadastroServico}"  th:object="${servicoForm}" method="post" enctype="multipart/form-data">
             <div class="credenciais">
                 <div class="lado1">
                     
-                    <input type="text" id="nome" name="nome" th:field="*{nome}" placeholder="Nome de usuário" class="campoDeFormulario" required><br>
-                  
-                    <input type="email" id="email"  name="email" th:field="	*{email}" placeholder="E-mail/Nome de usuário" class="campoDeFormulario" required><br>
+                    <input type="number" id="id" name="id" th:field="*{id}"  value="1"  placeholder="Nome de usuário" style="display: none;" required>
 
-                    <input type="Date" id="DataDeNasc" name="DataDeNasc" th:field="*{DataDeNasc}" placeholder="DataDeNasc" class="campoDeFormulario" required><br>
+                    <input type="text" id="NomeDeServico" name="NomeDeServico" th:field="*{nomeDoEquipamento}" placeholder="Nome de serviço" class="campoDeFormulario" required><br>
+                    
                    
-                    <input type="text" id="cpf" name="cpf" th:field="*{cpf}" placeholder="cpf" class="campoDeFormulario" required><br>
+                    <input type="date" id="DataDeEmissao" name="DataDeEmissao" th:field="*{dataDeEmissao}" placeholder="Data de Emissão" class="campoDeFormulario" required><br>
 
-                    <input type="password" id="senha" name="senha" th:field="*{senha}"  placeholder="Senha" class="campoDeFormulario"  required><br>
+                    <input type="number" id="estadoServico" name="estadoServico" th:field="*{estadoServico}"  value="1"  placeholder="Nome de usuário" style="display: none;" required>
+
                  
                 </div>
 
                 <div class="lado2">
+                             
+                    <select id="funcionarioId" name="funcionarioId" th:field="*{funcionarioId}"  class="campoDeFormulario" style="width: 440px;">
+                      <option value="">Selecione um funcionário</option>
+                      <option th:each="funcionario : ${funcionarios}" th:value="${funcionario.id}" th:text="${funcionario.nome}"></option>
+                    </select><br>
+                    
 
-                <select id="estado" name="estado" th:field="*{uF}" placeholder="Estado" class="campoDeFormulario" style="width: 441px;" required>
-                       
-                    <option  value="">Estado</option>  
-                       
-                </select><br>    
-        
-                <input type="text" id="Cep" name="Cep" th:field="*{Cep}" placeholder="Cep" class="campoDeFormulario" required><br>
+                    <select id="clienteId" name="clienteId" th:field="*{clienteId}"  class="campoDeFormulario" style="width: 440px;">
+                        <option value="">Selecione um Cliente</option>
+                        <option th:each="Cliente : ${clientes}" th:value="${Cliente.id}" th:text="${Cliente.nome}"></option>
+                    </select><br>
 
-                 <input type="text" id="Cidade" name="Cidade" th:field="*{Cidade}" placeholder="Cidade" class="campoDeFormulario" required><br>
-               
-                <input type="text" id="Bairro" name="Bairro" th:field="*{Bairro}" placeholder="Bairro" class="campoDeFormulario" required><br>
+
                       
-                <input type="text" id="Logradouro" name="Logradouro" 
-                th:field="*{logradouro}" placeholder="Endereço" class="campoDeFormulario" required><br>
-            
-                <input type="text" id="complemento" name="complemento" th:field="*{complemento}" placeholder="complemento" class="campoDeFormulario" required><br>
-
-                
-                
-
-                                         
+                    
                 </div>
               
             </div>
             <div style="display: flex;
-            justify-content: center;">
-                <select id="Cargo" name="Cargo" th:field="*{Cargo_Id}" placeholder="Cargo" class="campoDeFormulario" required >
-   			
-                    <option  value="">Cargo</option>   
-                    <option  value="1">funcionario</option>
-                    <option  value="2">Administrador</option>
-            
-                </select><br>
+           justify-content: space-evenly;flex-direction: column;align-items: center;">
+                <textarea id="DescricaoDoProblema" name="DescricaoDoProblema" th:field="*{descricaoDoProblema}" placeholder="Descrição" class="alinhaDescricao campoDeFormulario" required rows="6" cols="75" ></textarea><br>
+
+                <div class="file-upload" id="AreaImg">
+                    <label for="imagem" class="file-label">
+                        <span style="width: 300px;height: 30px">Arraste a imagem ou clique aqui</span>
+                    </label>
+                    <input type="file" id="imagem" name="imagem" accept="image/*" onchange="showFileName(this)" class="file-input">
+                  
                 </div>
+                <div id="preview">
+                    <img id="preview-image" src="#" alt="Imagem de visualização" style="display: none;margin-right: 10%;">
+                    <div id="remover-imagem" class="remove-symbol" style="display: none;">X</div>
+                </div>
+            
+                
+                
+
+
+            </div>
+ 
 
                 <div class="div_botao">
-                    <button>Cadastrar</button>
+                    <button type="submit" class="button">Cadastrar</button>
                 </div>
-        </Form>     
+        </form>     
     </div>
 
-    <script>
-	    const estados = [
-	        "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", 
-	        "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", 
-	        "RS", "RO", "RR", "SC", "SP", "SE", "TO"
-	    ];
+<script>
 
-        const selectEstado = document.getElementById("estado");
-        
-        estados.forEach(sigla => {
-            const option = document.createElement("option");
-            option.value = sigla;
-            option.text = sigla;
-            selectEstado.appendChild(option);
-        });
+function showFileName(input) {
+    const label = document.querySelector('label[for="Imagem"]');
+    const previewImage = document.getElementById('preview-image');
+    const AreaInseriImage = document.getElementById('AreaImg')
+    const ApagarImagem = document.getElementById('remover-imagem')
+    const inputImagem = document.getElementById('imagem');
+    console.log(inputImagem.value);
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+           
+            previewImage.style.display = 'block';
+            ApagarImagem.style.display = 'block';
+            AreaInseriImage.style.display = 'none';
+            
+        };
+
+        reader.readAsDataURL(input.files[0]);
+       
+    } else {
+        label.textContent = 'Arraste uma imagem ou clique aqui para fazer upload';
+        previewImage.style.display = 'none';
+
+    }
+}
+
+// Função para remover a imagem e redefinir o input de arquivo
+function removerImagem() {
+    const previewImage = document.getElementById('preview-image');
+    const AreaInseriImage = document.getElementById('AreaImg');
+    const inputImagem = document.getElementById('imagem');
+    const ApagarImagem = document.getElementById('remover-imagem')
+
+    previewImage.src = '';
+    previewImage.style.display = 'none';
+    AreaInseriImage.style.display = 'block';
+    ApagarImagem.style.display = 'none';
+    inputImagem.value = ''; // Limpar o valor do input de arquivo
+}
+
+// Associar a função ao botão de remoção
+document.getElementById('remover-imagem').addEventListener('click', removerImagem);
+const Imagem = document.getElementById('imagem');
+
+
+// Encontre o elemento de entrada numérica pelo ID
+var campoNumerico = document.getElementById("estadoServico");
+
+// Defina o valor fixo desejado
+var valorFixo = 1;
+
+// Atribua o valor fixo ao campo de entrada numérica
+campoNumerico.value = valorFixo;
+
+
 </script>
-    
+
+
+
 
 </body>
 </html>

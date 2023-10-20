@@ -247,6 +247,7 @@ font-size: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .input-area input {
@@ -353,4 +354,22 @@ input::placeholder{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.remove-symbol {
+    color: red; /* Define a cor vermelha */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    font-size: 50px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+.remove-symbol:hover {
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+.butaoCabecalho{
+    background:none;
+    border:0px;
+    cursor: pointer;
+    text-align: center;
+  
 }

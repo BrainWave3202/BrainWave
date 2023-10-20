@@ -26,8 +26,6 @@ import com.tcc.assistencia.model.entity.ServicoForm;
 import com.tcc.assistencia.model.service.FuncionarioService;
 import com.tcc.assistencia.model.service.ServicoService;
 
-import jakarta.servlet.http.HttpSession;
-
 @Controller
 @RequestMapping("api/v1/")
 public class DashController {
@@ -40,33 +38,23 @@ public class DashController {
 	
 	
 	@GetMapping("Servicos_previa")
-	public String servicosPrevia(Model model, HttpSession session){
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser == null) {
-			 
-			    return "redirect:login";	 
-		 }
+	public String servicosPrevia(Model model){
+		
 		Servico servicosAnalise = mServicoService.procurarServiçoPorDataMaisAntigaDeEmissao(1);
 		Servico servicosAndamento = mServicoService.procurarServiçoPorDataMaisAntigaDeEmissao(2);
 		
-
-		
-
-		if(servicosAnalise != null) {
-		if(servicosAnalise.getImagem() != null) {
 		String imagemBase64Analise = Base64.getEncoder().encodeToString(servicosAnalise.getImagem());
 		servicosAnalise.setImagemBase64("data:image/png;base64," + imagemBase64Analise);
-		}
 		
+		String imagemBase64Andamento = Base64.getEncoder().encodeToString(servicosAndamento.getImagem());
+		servicosAndamento.setImagemBase64("data:image/png;base64," + imagemBase64Andamento);
+		
+		
+		if(servicosAnalise != null) {
 			model.addAttribute("servicoAnalise", servicosAnalise);
 		} 
 		
 		if(servicosAndamento != null) {
-			if(servicosAndamento.getImagem() != null) {
-			String imagemBase64Andamento = Base64.getEncoder().encodeToString(servicosAndamento.getImagem());
-			servicosAndamento.setImagemBase64("data:image/png;base64," + imagemBase64Andamento);
-			}
-			
 			model.addAttribute("servicoAndamento", servicosAndamento);
 		} 
 		
@@ -82,23 +70,18 @@ public class DashController {
 
 	
 	@GetMapping("Servicos_analise")
-	public String servicosAnalise(Model model, HttpSession session){
+	public String servicosAnalise(Model model){
+
 		
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser == null) {
-			 
-			    return "redirect:login";	 
-		 }
 		List<Servico> servicosAnalise = mServicoService.procurarServiçoEstado(1);
 		List<Servico> servicosImparAnalise = new ArrayList<>();
 		List<Servico> servicosParAnalise = new ArrayList<>();
 		
-		
 		for(int i = 0;i < servicosAnalise.size();i++ ) {
-			if(servicosAnalise.get(i).getImagem() != null) {
+			
 			String imagemBase64 = Base64.getEncoder().encodeToString(servicosAnalise.get(i).getImagem());
 			servicosAnalise.get(i).setImagemBase64("data:image/png;base64," + imagemBase64);
-			}
+			
 			if(i % 2 == 0) {
 			
 				servicosParAnalise.add(servicosAnalise.get(i));
@@ -108,7 +91,7 @@ public class DashController {
 				servicosImparAnalise.add(servicosAnalise.get(i));
 			}
 					
-			
+				
 			
 		}
 		
@@ -137,23 +120,18 @@ public class DashController {
 	}
 	
 	@GetMapping("Servicos_andamento")
-	public String servicosAndamento(Model model, HttpSession session){
-		
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser == null) {
-			 
-			    return "redirect:login";	 
-		 }
+	public String servicosAndamento(Model model){
+
 		
 		List<Servico> servicosAndamento = mServicoService.procurarServiçoEstado(2);
 		List<Servico> servicosImparAndamento = new ArrayList<>();
 		List<Servico> servicosParAndamento = new ArrayList<>();
 		
 		for(int i = 0;i < servicosAndamento.size();i++ ) {
-			if(servicosAndamento.get(i).getImagem() != null) {
+			
 			String imagemBase64 = Base64.getEncoder().encodeToString(servicosAndamento.get(i).getImagem());
 			servicosAndamento.get(i).setImagemBase64("data:image/png;base64," + imagemBase64);
-			}
+			
 			if(i % 2 == 0) {
 			
 				servicosParAndamento.add(servicosAndamento.get(i));
@@ -201,37 +179,22 @@ public class DashController {
 	}
 	
 	@GetMapping("ServicoInf")
-	public String servicoInf(Model model, @RequestParam("seuCampo") Long valor,  ServicoForm servicoForm, HttpSession session) {
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser == null) {
-			 
-			    return "redirect:login";	 
-		 }
+	public String servicoInf(Model model, @RequestParam("seuCampo") Long valor,  ServicoForm servicoForm) {
 		
 		Servico servicoid = mServicoService.listarPorId(valor);
-		if(servicoid.getImagem() !=  null) {
 		String imagemBase64 = Base64.getEncoder().encodeToString(servicoid.getImagem());
 		servicoid.setImagemBase64("data:image/png;base64," + imagemBase64);
-		}
 		model.addAttribute("Service", servicoid);
 		
 		return "especificacoes_analise";
 	}
 
 	@GetMapping("ServicoInfAndamento")
-	public String servicoInfAndamento(Model model, @RequestParam("seuCampo") Long valor,  Servico servico, HttpSession session) {
-		
-		Funcionario authenticatedUser = (Funcionario) session.getAttribute("authenticatedUser");
-		 if (authenticatedUser == null) {
-			 
-			    return "redirect:login";	 
-		 }
+	public String servicoInfAndamento(Model model, @RequestParam("seuCampo") Long valor,  Servico servico) {
 		
 		Servico servicoid = mServicoService.listarPorId(valor);
-		if(servicoid.getImagem() !=  null) {
 		String imagemBase64 = Base64.getEncoder().encodeToString(servicoid.getImagem());
 		servicoid.setImagemBase64("data:image/png;base64," + imagemBase64);
-		}
 		model.addAttribute("Service", servicoid);
 		
 		return "especificacoes_aprovado";

@@ -12,20 +12,21 @@
 
 </head>
 <body>
+	
 <div class="header" id="header">
-        <div style="top: 4px;position: relative;" class="logo_header">
-            <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave">
+        <div style="position: relative;" class="logo_header">
+            <a th:href="@{tela_inicial}" class="navigation_header"> <img src="/images/brain.png" class="img_brain" alt="Logo BrainWave"></a>
         </div>
     
-            <div class="navigation_header">
-            <form action="Servicos_previa" method="get">
+        <div class="navigation_header" style="height: 100%;">
+            <form action="Servicos_previa" method="get" style="height: 100%;display: flex;align-items: center;">
        	 	<button class="butaoCabecalho"> <a class="navigation_header">voltar</a> </button>
         	</form>
-        	<form action="login" method="get">
+        	<form action="login" method="get" style="height: 100%;display: flex;align-items: center;">
        		<button class="butaoCabecalho"><a class="navigation_header">Sair</a></button>
        	 	</form>
-            </div>
-    </div>
+        </div>
+</div>
 
     <div class="container">
         <div  class="titulo">
@@ -38,55 +39,85 @@
        
 	   
         <!-------------------------------------------------------------------------------------------------------------------->        
-			<div class="lado_esquerdo" style="margin-right:9%">
-						<ul  class="TamUL">   	  
-								<li class="estiloLi" th:each="funcionario : ${funcionariosPar}">
+			<div class="lado_esquerdo" style="margin-right:7%">
+						<ul  class="TamUL" th:if="${servicosPar != null}">   	  
+								<li class="estiloLi" style="width: 13vw;" th:each="servico : ${servicosPar}">
 							 	
 									<div class="svc_direita_1">
 				            					<div class="textos_direita1">
 											    <div >
-												 	<form action="ServicoInf" method="get">
-											 		<button class="btnServicos"> 
-												             <h2 th:text="${funcionario.nome}"></h2>
-												             
-												             <br>
-												             <br>	
-												             <br>
-												             <br>
-												             <br>
-												             
-												             <br>
-												             <br>
-												             <br>
-												        
-												             <p th:text="${funcionario.email}"></p>
-												             <p th:text="${funcionario.senha}"></p>
-												      </button>     
+													<form action="ServicoInf" method="get">
+														<button class="btnServicos"> 
+															<div style="display: flex;">
+																<div style="width: 50%;
+																height: 24vw;
+																display: flex;
+																flex-direction: column;
+																justify-content: space-between;
+																align-items: flex-start;">
+																	<h2 th:text="${servico.nomeDoEquipamento}"></h2>
+																
+																	<p th:text="${servico.descricaoDoProblema}"></p>
+																
+															
+																	<p th:text="'Data de requerimento: ' + ${#dates.format(servico.dataDeEmissao, 'dd/MM/yyyy')}"></p>
+																	<input type="number" name="seuCampo" placeholder="Digite um valor" th:value="${servico.id}" style="display: none;">
+
+																</div>
+																<div  style="width: 50%;display: flex;
+																align-items: center;" th:if="${servico.imagemBase64 != null}">
+																	<img th:id="${servico.id}" class="imagensPar" th:src="${servico.imagemBase64}"  alt="Imagem de visualização" style="margin-right: 10%;" width="80%" height="60%">
+																</div>
+																<div  style="width: 50%;display: flex;
+																align-items: center;" th:unless="${servico.imagemBase64 != null}">
+																	<img th:id="${servico.id}" class="imagensPar" src=""  alt="Imagem de visualização" style="margin-right: 10%;" width="80%" height="60%">
+																</div>
+																
+															</div>
+														</button>     
 												      </form> 
 											          </div>
 											 </div>	
 								</div>		          
-							</li> 
+							</li>
 						</ul>      
 			</div> 
 			<div class="lado_esquerdo" style="margin-left:7%">
-						<ul  class="TamUL" >   	  
-							<li class="estiloLi" th:each="funcionario : ${funcionariosImpar}">
+						<ul  class="TamUL"  th:if="${servicosImpar != null}">   	  
+							<li class="estiloLi" style="width: 13vw;" th:each="servico : ${servicosImpar}">
 								  <div class="svc_direita_1">
 		            					<div class="textos_direita1">
 									           <div >
-									             <h2 th:text="${funcionario.nome}"></h2>
-									             
-									             <br>
-									             <br>
-									             <br>
-									             <br>
-									             <br>
-									             <br>
-									             <br>
-									             <br>
-									             <p th:text="${funcionario.email}"></p>
-									             <p th:text="${funcionario.senha}"></p>
+									            <form action="ServicoInf" method="get">
+													<button class="btnServicos"> 
+														<div style="display: flex;">
+															<div style="width: 50%;
+															height: 24vw;
+															display: flex;
+															flex-direction: column;
+															justify-content: space-between;
+															align-items: flex-start;">
+																<h2 th:text="${servico.nomeDoEquipamento}"></h2>
+															
+																<p th:text="${servico.descricaoDoProblema}"></p>
+											
+														
+																<p th:text="'Data de requerimento: ' + ${#dates.format(servico.dataDeEmissao, 'dd/MM/yyyy')}"></p>
+																<input type="number" name="seuCampo" placeholder="Digite um valor" th:value="${servico.id}" style="display: none;">
+
+															</div>
+															<div  style="width: 50%;display: flex;
+															align-items: center;"  th:if="${servico.imagemBase64 != null}">
+																<img th:id="${servico.id}" class="imagensPar" th:src="${servico.imagemBase64}"  alt="Imagem de visualização" style="margin-right: 10%;" width="80%" height="60%">
+															</div>
+															<div  style="width: 50%;display: flex;
+																align-items: center;" th:unless="${servico.imagemBase64 != null}">
+																	<img th:id="${servico.id}" class="imagensPar" src=""  alt="Imagem de visualização" style="margin-right: 10%;" width="80%" height="60%">
+																</div>
+										
+														</div>
+													</button>     
+												  </	form> 
 									          </div>
 									 	</div>
 								  </div>          
@@ -97,6 +128,20 @@
 			
     </div>
 </body>
+<script>
+
+
+    
+
+  
+
+   
+
+	
+
+
+
+</script>
 </html>
 
 
